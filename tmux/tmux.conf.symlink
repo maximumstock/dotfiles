@@ -43,6 +43,9 @@ bind -r L resize-pane -R 10
 # Tmux Resurrect
 run-shell ~/.dotfiles/tmux/plugins/tmux-resurrect/resurrect.tmux
 
+# vim-tmux-clipboard https://github.com/roxma/vim-tmux-clipboard
+set -g focus-events on
+
 ##############################
 ### Color & Style Settings ###
 ##############################

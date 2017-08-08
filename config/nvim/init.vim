@@ -1,6 +1,6 @@
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
-" 
+ 
 " Language Support
 Plug 'othree/html5.vim'
 Plug 'elixir-lang/vim-elixir'
@@ -24,6 +24,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " fuzzy file finder
+Plug 'tmux-plugins/vim-tmux-focus-events' " needed for vim-tmux-clipboard
+
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""
