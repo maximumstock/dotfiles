@@ -1,0 +1,34 @@
+# gitconfig
+[user]
+    name = Maximilian Stock
+    email = me@maximumstock.net
+[github]
+    user = maximumstock
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
+    ui = auto
+[color "branch"]
+    current = green bold
+    local = green
+    remote = red bold
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[color "status"]
+    added = green bold
+    changed = yellow bold
+    untracked = red
+[color "sh"]
+    branch = yellow
+[push]
+    # push will only do the current branch, not all branches
+    default = current
+[core]
+    excludesfile = ~/.gitignore_global
+    editor = vim
+    whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent

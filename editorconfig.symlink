@@ -1,0 +1,8 @@
+root = true
+
+[*]
+indent_style = space 
+indent_size = 2
+
+[*.{json,java,c,cpp}]
+indent_size = 4

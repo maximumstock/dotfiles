@@ -1,0 +1,50 @@
+# tmux display things in 256 colors
+set -g default-terminal "screen-256color"
+set -g history-limit 1000
+set -g mouse on
+set -g renumber-windows on
+
+# unbind default prefix and set it to Ctrl+a
+unbind C-b
+set -g prefix C-a
+bind C-a send-prefix
+
+set -sg escape-time 0
+set -g base-index 1
+
+# split window and fix path for tmux 1.9
+bind | split-window -h -c "#{pane_current_path}"
+bind - split-window -v -c "#{pane_current_path}"
+
+# synchronize all panes in a window
+bind y setw synchronize-panes
+
+# redefine window splits and window creations to open a new pane with the old path
+bind '%' split-window -h -c '#{pane_current_path}'
+bind '"' split-window -v -c '#{pane_current_path}'
+bind 'c' new-window -c '#{pane_current_path}'
+
+# pane selection shortcuts
+bind-key Up     select-pane -U
+bind-key Down   select-pane -D
+bind-key Left   select-pane -L
+bind-key Right  select-pane -R
+bind h          select-pane -L
+bind j          select-pane -D
+bind k          select-pane -U
+bind l          select-pane -R
+
+# Resize pane shortcuts
+bind -r H resize-pane -L 10
+bind -r J resize-pane -D 10
+bind -r K resize-pane -U 10
+bind -r L resize-pane -R 10
+
+# Tmux Resurrect
+run-shell ~/.dotfiles/tmux/plugins/tmux-resurrect/resurrect.tmux
+
+##############################
+### Color & Style Settings ###
+##############################
+
+source ~/.dotfiles/tmux/theme.sh
