@@ -4,6 +4,9 @@
 # nvim as default editor
 export EDITOR="nvim"
 
+# enable Erlang/Elixir shell history
+export ERL_AFLAGS="-kernel shell_history enabled"
+
 # smart urls
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic

@@ -7,14 +7,11 @@ alias sudo="sudo "
 alias ll="ls -la"
 
 # vim => nvim
-# alias vim="nvim"
+alias vim="nvim"
 # alias vi="nvim"
 
 # rebar3 => rebar
 alias rebar="rebar3"
-
-# python/pip
-# alias pip="pip3"
 
 # Changing/making/removing directory
 setopt auto_pushd
