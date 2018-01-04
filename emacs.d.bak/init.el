@@ -1,0 +1,135 @@
+(require 'package)
+
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
+
+(setq package-enable-at-startup nil)
+(package-initialize)
+
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(eval-when-compile
+  (require 'use-package))
+
+(use-package evil :ensure t)
+(use-package ggtags :ensure t)
+(use-package magit :ensure t)
+(use-package helm :ensure t)
+(use-package yasnippet :ensure t)
+(use-package flycheck :ensure t)
+(use-package elixir-mode :ensure t)
+(use-package alchemist :ensure t)
+(use-package exec-path-from-shell :ensure t)
+(use-package eyebrowse
+  :ensure t
+  :config
+  (eyebrowse-mode 1))
+
+;; Copy environment variables from zsh
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+;; Globally enable company-mode for auto completion
+(add-hook 'after-init-hook 'global-company-mode)
+
+(use-package base16-theme
+  :ensure t
+  :config
+  (load-theme 'base16-materia t))
+
+(use-package smyx-theme
+  :ensure t
+  :config
+  (load-theme 'smyx t))
+
+(use-package gruvbox-theme
+  :ensure t
+  :config
+  (load-theme 'gruvbox t))
+
+(use-package all-the-icons :ensure t)
+
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
+
+(use-package web-mode :ensure t)
+
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-global-mode))
+
+(use-package helm-projectile
+  :ensure t
+  :config
+  (helm-projectile-on))
+
+;; Disable visual and sound bells
+(defun my-bell-function ())
+(setq ring-bell-function 'my-bell-function)
+(setq visible-bell nil)
+
+;; Select new buffer after splitting
+(global-set-key "\C-x2" (lambda () (interactive)(split-window-vertically) (other-window 1)))
+(global-set-key "\C-x3" (lambda () (interactive)(split-window-horizontally) (other-window 1)))
+
+(setq
+   backup-by-copying t      ; don't clobber symlinks
+   backup-directory-alist
+    '(("." . "~/.saves"))    ; don't litter my fs tree
+   delete-old-versions t
+   kept-new-versions 6
+   kept-old-versions 2
+   version-control t)       ; use versioned backups
+
+;; Disable GUI stuff
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+
+;; Scrolling by line
+(setq scroll-step            1
+      scroll-conservatively  10000)
+
+;; Keyboard settings
+(setq mac-option-modifier 'none)
+(setq mac-command-modifier 'meta)
+(setq ns-function-modifier 'hyper)
+ 
+(evil-mode t)
+
+;; Org-Mode settings
+(setq org-log-done 'time)
+
+(global-hl-line-mode 1)
+(global-linum-mode 1)
+(yas-global-mode 1)
+
+(dolist (hook '(text-mode-hook))
+  (add-hook hook (lambda ()
+                   (flyspell-mode 1)
+                   (visual-line-mode 1)
+                   )))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+  '(custom-safe-themes
+     (quote
+       ("d9dab332207600e49400d798ed05f38372ec32132b3f7d2ba697e59088021555" default)))
+  '(package-selected-packages
+     (quote
+       (markdown-mode+ markdown-mode git-gutter exec-path-from-shell tide typescript-mode helm-projectile powerline web-mode neotree ztree all-the-icons alchemist elixir-mode magit ggtags evil dracula-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
