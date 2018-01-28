@@ -8,7 +8,6 @@ alias ll="ls -la"
 
 # vim => nvim
 alias vim="nvim"
-# alias vi="nvim"
 
 # rebar3 => rebar
 alias rebar="rebar3"
