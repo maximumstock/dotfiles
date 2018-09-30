@@ -20,11 +20,11 @@ brew install tmux
 brew install zsh
 brew install z
 brew install neovim/neovim/neovim
+brew install --with-cocoa --srgb emacs
+brew linkapps emacs
 
 # dev env
 brew install nvm
-brew install rebar3
-brew install erlang
 brew install elixir
 # brew cask install java
 # brew install neo4j

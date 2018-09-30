@@ -6,9 +6,9 @@ let s:vim_home = expand("<sfile>:h")
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
  
-Plug 'ludovicchabant/vim-gutentags'
-  let g:gutentags_cache_dir = s:vim_home.'/tags'
-  let g:gutentags_ctags_exclude = ['venv', 'build', 'static', 'node_modules']
+"Plug 'ludovicchabant/vim-gutentags'
+"  let g:gutentags_cache_dir = s:vim_home.'/tags'
+"  let g:gutentags_ctags_exclude = ['venv', 'build', 'static', 'node_modules']
 
 " Auto-Completion
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
