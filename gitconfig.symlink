@@ -32,6 +32,7 @@
     excludesfile = ~/.gitignore_global
     editor = vim
     whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
+	autocrlf = false
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
