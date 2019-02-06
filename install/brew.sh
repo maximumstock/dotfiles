@@ -7,7 +7,7 @@ fi
 
 echo "Installing homebrew packages..."
 
-# misc 
+# misc
 brew install ack
 brew install tree
 brew install wget
@@ -22,6 +22,8 @@ brew install z
 brew install neovim/neovim/neovim
 brew install --with-cocoa --srgb emacs
 brew linkapps emacs
+brew install pyenv
+brew install pyenv-virtualenv
 
 # dev env
 brew install nvm

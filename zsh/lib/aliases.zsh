@@ -11,7 +11,7 @@ alias vim="nvim"
 
 # rebar3 => rebar
 alias rebar="rebar3"
-alias python="PYTHONPATH=$(pwd) python"
+# alias python="PYTHONPATH=$(pwd) python"
 
 # Changing/making/removing directory
 setopt auto_pushd
