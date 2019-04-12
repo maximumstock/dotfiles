@@ -1,14 +1,16 @@
 set nocompatible " use vim settings instead of vi settings
 
-" Get our vim directory. 
+" Get our vim directory.
 let s:vim_home = expand("<sfile>:h")
+let g:python3_host_prog = '/Users/maximumstock/.pyenv/shims/python'
+let g:python_host_prog = '/Users/maximumstock/.pyenv/shims/python'
 
 " Plugins
 call plug#begin('~/.config/nvim/plugged')
- 
-"Plug 'ludovicchabant/vim-gutentags'
-"  let g:gutentags_cache_dir = s:vim_home.'/tags'
-"  let g:gutentags_ctags_exclude = ['venv', 'build', 'static', 'node_modules']
+
+Plug 'ludovicchabant/vim-gutentags'
+  let g:gutentags_cache_dir = s:vim_home.'/tags'
+  let g:gutentags_ctags_exclude = ['venv', 'build', 'static', 'node_modules']
 
 " Auto-Completion
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -27,9 +29,7 @@ Plug 'sheerun/vim-polyglot'
 " Elixir
 Plug 'elixir-lang/vim-elixir'
 Plug 'slashmili/alchemist.vim'
-
 Plug 'c-brenn/phoenix.vim'
-Plug 'tpope/vim-projectionist'
 
 " Language Support
 Plug 'othree/html5.vim'
@@ -65,7 +65,7 @@ call plug#end()
 colorscheme smyck
 set tabstop=2 " tab size in spaces
 set softtabstop=2
-set shiftwidth=2 " indentation size in spaces 
+set shiftwidth=2 " indentation size in spaces
 set expandtab " expand tabs to spaces
 set smarttab " only insert as many spaces as necessary to get to the next tab width
 set backupcopy=yes
@@ -89,11 +89,11 @@ end
 set ttimeout
 set ttimeoutlen=0
 set notimeout
- 
+
 " faster redrawing
 set ttyfast
 set lazyredraw
- 
+
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'luna'
 " always display full file path in status line
