@@ -10,14 +10,6 @@ compinit
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# Postgres.app
-export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
-# VS Code
-export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
-# Java
-export JAVA_HOME=$(/usr/libexec/java_home)
-# Python virtual environments handled by pyenv
-export WORKON_HOME=$HOME/.pyenv/versions
 eval "$(pyenv init -)"
 
 export NVM_DIR="$HOME/.nvm"

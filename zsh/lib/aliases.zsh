@@ -10,8 +10,7 @@ alias ll="ls -la"
 alias vim="nvim"
 
 # rebar3 => rebar
-alias rebar="rebar3"
-# alias python="PYTHONPATH=$(pwd) python"
+alias gca="open -a Google\ Chrome --args --disable-web-security --user-data-dir=\"\""
 
 # Changing/making/removing directory
 setopt auto_pushd

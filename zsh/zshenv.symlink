@@ -1,0 +1,19 @@
+# nvim as default editor
+export EDITOR="nvim"
+# enable Erlang/Elixir shell history
+export ERL_AFLAGS="-kernel shell_history enabled"
+# Postgres.app
+export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
+# VS Code
+export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
+# Rust
+export PATH=$PATH:$HOME/.cargo/bin
+# Java
+export JAVA_HOME=$(/usr/libexec/java_home)
+# Python virtual environments handled by pyenv
+export WORKON_HOME=$HOME/.pyenv/versions
+
+# Command history related settings
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
