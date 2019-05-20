@@ -11,9 +11,9 @@ echo "Installing homebrew packages..."
 brew install ack
 brew install tree
 brew install wget
-brew install logstalgia
+# brew install logstalgia
 brew install htop
-brew install goaccess
+# brew install goaccess
 brew install reattach-to-user-namespace # needed for tmux
 brew install git
 brew install tmux
@@ -24,6 +24,8 @@ brew install --with-cocoa --srgb emacs
 brew linkapps emacs
 brew install pyenv
 brew install pyenv-virtualenv
+brew install ripgrep
+# brew install zsh-autosuggestions
 
 # dev env
 brew install nvm
