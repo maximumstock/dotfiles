@@ -8,10 +8,15 @@ export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 # Rust
 export PATH=$PATH:$HOME/.cargo/bin
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 # Java
 export JAVA_HOME=$(/usr/libexec/java_home)
 # Python virtual environments handled by pyenv
 export WORKON_HOME=$HOME/.pyenv/versions
+
+export DOTFILES=$HOME/.dotfiles
+export ZSH=$DOTFILES/zsh
+export NVM_DIR="$HOME/.nvm"
 
 # Command history related settings
 HISTFILE=$HOME/.zsh_history

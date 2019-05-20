@@ -1,6 +1,3 @@
-export DOTFILES=$HOME/.dotfiles
-export ZSH=$DOTFILES/zsh
-
 # load all config files in $ZSH/lib
 for config_file ($ZSH/lib/*.zsh) source $config_file
 
@@ -12,6 +9,7 @@ compinit
 
 eval "$(pyenv init -)"
 
-export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
