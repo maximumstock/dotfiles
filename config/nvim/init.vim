@@ -25,15 +25,20 @@ Plug 'junegunn/fzf.vim'
 Plug 'airblade/vim-gitgutter' " show git diffs in editor
 
 " Semantic language support
-"Plug 'phildawes/racer'
-"Plug 'racer-rust/vim-racer'
+Plug 'phildawes/racer'
+Plug 'racer-rust/vim-racer'
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
+" TypeScript
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 
 " Completion plugins
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
+" For async completion
+" Plug 'Shougo/deoplete.nvim'
 
 " Syntactic language support
 Plug 'cespare/vim-toml'
@@ -43,6 +48,8 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 
 call plug#end()
+
+"let g:deoplete#enable_at_startup = 1
 
 " if has('nvim')
 "     set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
@@ -64,7 +71,10 @@ colorscheme smyck
 hi Normal ctermbg=NONE
 " Get syntax
 syntax on
-
+hi GitGutterAdd    guifg=#009900 guibg=<X> ctermfg=2
+hi GitGutterChange guifg=#bbbb00 guibg=<X> ctermfg=3
+hi GitGutterDelete guifg=#ff2222 guibg=<X> ctermfg=1
+set updatetime=100
 
 " Lightline
 " let g:lightline = { 'colorscheme': 'wombat' }
@@ -87,7 +97,7 @@ if executable('rg')
 endif
 
 " Javascript
-let javaScript_fold=0
+" let javaScript_fold=0
 
 " Linter
 " only lint on save
@@ -286,6 +296,8 @@ map L $
 " ,c will copy entire buffer into clipboard
 noremap <leader>p :read !xsel --clipboard --output<cr>
 noremap <leader>c :w !xsel -ib<cr><cr>
+set clipboard=unnamed "sets the default copy register to be *
+set clipboard=unnamedplus "sets the default copy register to be +
 
 " <leader>s for Rg search
 noremap <leader>s :Rg

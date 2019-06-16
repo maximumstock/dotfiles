@@ -1,15 +1,26 @@
 # load all config files in $ZSH/lib
-for config_file ($ZSH/lib/*.zsh) source $config_file
+for config_file ($ZSH/lib/*.zsh); do
+  source $config_file
+done
 
 # initialize autocomplete
 autoload -U compinit
-compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+
+source /usr/local/share/antigen/antigen.zsh
+
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle lukechilds/zsh-nvm
+antigen bundle popstas/zsh-command-time
+
+antigen apply
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 eval "$(pyenv init -)"
 
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -18,6 +18,7 @@ brew install reattach-to-user-namespace # needed for tmux
 brew install git
 brew install tmux
 brew install zsh
+brew install antigen
 brew install z
 brew install neovim/neovim/neovim
 brew install --with-cocoa --srgb emacs
@@ -25,7 +26,6 @@ brew linkapps emacs
 brew install pyenv
 brew install pyenv-virtualenv
 brew install ripgrep
-# brew install zsh-autosuggestions
 
 # dev env
 brew install nvm

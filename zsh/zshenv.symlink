@@ -1,5 +1,8 @@
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
+export SHELL="/usr/local/bin/zsh"
 # nvim as default editor
 export EDITOR="nvim"
+export LSCOLORS="Gxfxcxdxbxegedabagacad"
 # enable Erlang/Elixir shell history
 export ERL_AFLAGS="-kernel shell_history enabled"
 # Postgres.app
