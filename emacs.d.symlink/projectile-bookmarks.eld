@@ -1,0 +1,1 @@
+("~/code/snapaddy/snapaddy-grabber-buttons/" "~/code/poe-currency-flip-planner/" "~/.dotfiles/" "~/todo/" "~/Documents/Finanzen/" "~/code/snapaddy/snapaddy-export-lib/")
