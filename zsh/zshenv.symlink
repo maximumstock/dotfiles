@@ -9,6 +9,7 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
 # VS Code
 export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
+export PATH=$PATH:$HOME/.pyenv/bin
 # Rust
 export PATH=$PATH:$HOME/.cargo/bin
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
