@@ -1,4 +1,5 @@
 # load all config files in $ZSH/lib
+ZSH=$HOME/.dotfiles/zsh
 for config_file ($ZSH/lib/*.zsh); do
   source $config_file
 done
