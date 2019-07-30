@@ -1,12 +1,20 @@
+#+PROPERTY: header-args :tangle init.el
+
+* Initial setup
+#+BEGIN_SRC elisp
 ;;(setq debug-on-error t)
 ;;(setq debug-on-quit t)
+#+END_SRC
+
+* Melpa sources & package management
+#+BEGIN_SRC elisp
 
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
-(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+;;(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (package-initialize)
 
 ;; use-package
@@ -15,7 +23,9 @@
   (package-install 'use-package))
 (require 'use-package)
 (setq use-package-always-ensure t)
-
+#+END_SRC
+* Emacs environment
+#+BEGIN_SRC elisp
 (defvar *is-mac* (memq window-system '(mac ns x)))
 
 (use-package exec-path-from-shell
@@ -28,10 +38,19 @@
   (defvar mac-command-key-is-meta t)
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier nil))
+#+END_SRC
 
+* GC Settings
+#+BEGIN_SRC elisp
 (setq gc-cons-threshold 32000000
 			garbage-collection-messages t)
+#+END_SRC
 
+#+RESULTS:
+: emacs-load-start-time
+
+* General editor settings
+#+BEGIN_SRC elisp
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 (prefer-coding-system 'utf-8)
 
@@ -74,7 +93,12 @@
 (use-package editorconfig
   :ensure t
   :init (editorconfig-mode 1))
+#+END_SRC
 
+#+RESULTS:
+
+* Projects & Files
+#+BEGIN_SRC elisp
 ;; Recentf comes with Emacs but it should always be enabled.
 
 (use-package recentf
@@ -91,7 +115,12 @@
   :init (projectile-mode))
 (use-package counsel-projectile
   :init (counsel-projectile-mode))
+#+END_SRC
 
+#+RESULTS:
+
+* Visuals & Themes
+#+BEGIN_SRC elisp
 (use-package gruvbox-theme :ensure t)
 (use-package rainbow-delimiters :ensure t)
 (use-package powerline
@@ -111,11 +140,19 @@
 ;;   (custom-theme-set-faces
 ;;   'doom-tomorrow-night
 ;;   '(font-lock-doc-face ((t (:foreground "#D8D2C1"))))))
+#+END_SRC
 
+#+RESULTS:
+: t
+
+* which-key
+#+BEGIN_SRC elisp
 (use-package which-key
   :config (setq which-key-idle-delay 0.5)
   :init (which-key-mode t))
-
+#+END_SRC
+* evil-mode
+#+BEGIN_SRC elisp
 (use-package evil
   :ensure t
   :config
@@ -133,7 +170,10 @@
 	:config
   (global-evil-surround-mode))
 (evil-mode 1)
-
+#+END_SRC
+* org-mode
+** General
+#+BEGIN_SRC elisp
 (use-package org-bullets)
 (use-package org)
 (add-hook 'org-mode-hook (lambda() (org-bullets-mode t)))
@@ -153,6 +193,14 @@
 (defvar org-agenda-todo-ignore-deadlines t)
 (setq org-agenda-files '("~/todo"))
 (setq org-src-fontify-natively t)
+#+END_SRC
+
+#+RESULTS:
+: t
+
+** org-babel
+
+#+BEGIN_SRC elisp
 
 (org-babel-do-load-languages
 	'org-babel-load-languages
@@ -162,6 +210,10 @@
 (setq org-src-preserve-indentation t
       org-edit-src-content-indentation t)
 
+#+END_SRC
+
+* git
+#+BEGIN_SRC elisp
 (use-package git-gutter
   :ensure t
   :init (global-git-gutter-mode t))
@@ -169,7 +221,9 @@
 (use-package magit
   :ensure t
   :init (evil-magit-init))
-
+#+END_SRC
+* company
+#+BEGIN_SRC elisp
 (use-package company
 	:diminish company-mode
   :config
@@ -183,12 +237,20 @@
 ;; (use-package company-quickhelp
 ;;	:init (with-eval-after-load 'company (company-quickhelp-mode)))
 (global-company-mode t)
+#+END_SRC
 
+* flycheck
+#+BEGIN_SRC elisp
 (use-package flycheck
   :hook (prog-mode . flycheck-mode))
-
+#+END_SRC
+* Language Support
+** Node
+#+BEGIN_SRC elisp
 (use-package nvm :ensure t)
-
+#+END_SRC
+* Keybindings
+#+BEGIN_SRC elisp
 ;; Map escape to cancel (like C-g)...
 (define-key isearch-mode-map [escape] 'isearch-abort)
 ;; isearch
@@ -233,16 +295,5 @@
    "ad" 'dired
    "g" '(magit-status :which-key "Magit")
    ))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(evil-magit which-key use-package rainbow-delimiters powerline org-bullets nvm magit gruvbox-theme git-gutter general flycheck exec-path-from-shell editorconfig counsel-projectile company)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+#+END_SRC

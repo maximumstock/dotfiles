@@ -1,28 +1,34 @@
 export ZSH_AUTOSUGGEST_USE_ASYNC=1
-export SHELL="/usr/local/bin/zsh"
-# nvim as default editor
-export EDITOR="nvim"
-export LSCOLORS="Gxfxcxdxbxegedabagacad"
-# enable Erlang/Elixir shell history
-export ERL_AFLAGS="-kernel shell_history enabled"
-# Postgres.app
-export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
-# VS Code
-export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
-export PATH=$PATH:$HOME/.pyenv/bin
-# Rust
-export PATH=$PATH:$HOME/.cargo/bin
-export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
-# Java
-export JAVA_HOME=$(/usr/libexec/java_home)
-# Python virtual environments handled by pyenv
-export WORKON_HOME=$HOME/.pyenv/versions
-
-export DOTFILES=$HOME/.dotfiles
-export ZSH=$DOTFILES/zsh
-export NVM_DIR="$HOME/.nvm"
+export SHELL=$(which zsh)
 
 # Command history related settings
 HISTFILE=$HOME/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
+
+# nvim as default editor
+export EDITOR="nvim"
+
+export LSCOLORS="Gxfxcxdxbxegedabagacad"
+
+# enable Erlang/Elixir shell history
+export ERL_AFLAGS="-kernel shell_history enabled"
+
+# Rust
+export PATH=$PATH:$HOME/.cargo/bin
+
+# Python virtual environments handled by pyenv
+export WORKON_HOME=$HOME/.pyenv/versions
+export PATH=$PATH:$HOME/.pyenv/bin
+
+export DOTFILES=$HOME/.dotfiles
+export ZSH=$DOTFILES/zsh
+export NVM_DIR="$HOME/.nvm"
+
+# macOS specific stuff
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
+	export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
+	export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+	export JAVA_HOME=$(/usr/libexec/java_home)
+fi

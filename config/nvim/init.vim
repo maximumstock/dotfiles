@@ -1,7 +1,3 @@
-" Fish doesn't play all that well with others
-set shell=/bin/bash
-let mapleader = "\<Space>"
-
 " =============================================================================
 " # PLUGINS
 " =============================================================================
@@ -31,7 +27,7 @@ Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 " TypeScript
 Plug 'HerringtonDarkholme/yats.vim'
-Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+"Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
 
 " Completion plugins
 Plug 'ncm2/ncm2-bufword'
@@ -43,7 +39,6 @@ Plug 'ncm2/ncm2-path'
 " Syntactic language support
 Plug 'cespare/vim-toml'
 Plug 'rust-lang/rust.vim'
-Plug 'dag/vim-fish'
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 
@@ -165,12 +160,6 @@ set completeopt=noinsert,menuone,noselect
 inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
 inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
 
-" Golang
-let g:go_play_open_browser = 0
-let g:go_fmt_fail_silently = 1
-let g:go_fmt_command = "goimports"
-let g:go_bin_path = expand("~/dev/go/bin")
-
 " =============================================================================
 " # Editor settings
 " =============================================================================
@@ -254,7 +243,7 @@ set ttyfast
 set lazyredraw
 set synmaxcol=500
 set laststatus=2
-set relativenumber " Relative line numbers
+" set relativenumber " Relative line numbers
 set number " Also show current absolute line
 set diffopt+=iwhite " No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
