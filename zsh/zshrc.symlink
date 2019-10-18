@@ -1,8 +1,13 @@
 # load all config files in $ZSH/lib
 ZSH=$HOME/.dotfiles/zsh
-for config_file ($ZSH/lib/*.zsh); do
-  source $config_file
-done
+source $ZSH/lib/colors.zsh
+source $ZSH/lib/appearance.zsh
+source $ZSH/lib/aliases.zsh
+source $ZSH/lib/history.zsh
+source $ZSH/lib/prompt.zsh
+source $ZSH/lib/general.zsh
+source $ZSH/lib/hotkeys.zsh
+source $ZSH/lib/completion.zsh
 
 # initialize autocomplete
 autoload -U compinit
@@ -21,7 +26,7 @@ antigen apply
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# eval "$(pyenv init -)"
+eval "$(pyenv init -)"
 
 #[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 #[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
