@@ -109,7 +109,8 @@
 
 (use-package ivy
 	:init (ivy-mode))
-(use-package counsel)
+(use-package counsel
+	:init (counsel-mode))
 (use-package projectile
   :config (setq projectile-git-submodule-command nil)
   :init (projectile-mode))

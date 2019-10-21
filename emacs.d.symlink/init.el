@@ -3,10 +3,9 @@
 
 (require 'package)
 (setq package-enable-at-startup nil)
-(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/"))
-(add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/"))
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
-(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (package-initialize)
 
 ;; use-package
@@ -85,7 +84,8 @@
 
 (use-package ivy
 	:init (ivy-mode))
-(use-package counsel)
+(use-package counsel
+	:init (counsel-mode))
 (use-package projectile
   :config (setq projectile-git-submodule-command nil)
   :init (projectile-mode))
@@ -238,8 +238,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(evil-magit which-key use-package rainbow-delimiters powerline org-bullets nvm magit gruvbox-theme git-gutter general flycheck exec-path-from-shell editorconfig counsel-projectile company)))
+	'(package-selected-packages
+		 (quote
+			 (pipenv general nvm flycheck company evil-magit git-gutter org-bullets evil-surround evil which-key powerline rainbow-delimiters gruvbox-theme counsel-projectile projectile counsel ivy editorconfig exec-path-from-shell use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -1,1 +1,1 @@
-("~/.dotfiles/" "~/todo/" "~/code/snapaddy/snapaddy-export-lib/" "~/code/snapaddy/snapaddy-browser-popup/" "~/code/snapaddy/snapaddy-grabber-buttons/" "~/code/poe-currency-flip-planner/")
+("~/code/poe-currency-flip-planner/" "~/.dotfiles/" "~/todo/")
