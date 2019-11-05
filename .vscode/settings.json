@@ -1,0 +1,33 @@
+{
+  "workbench.colorTheme": "Gruvbox Light (Hard)",
+  "vim.highlightedyank.enable": true,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "editor.rulers": [
+    80,
+    120
+  ],
+  "window.title": "${rootPath}${separator}${activeEditorMedium}",
+  "window.nativeTabs": true,
+  "elixirLS.dialyzerEnabled": true,
+  "editor.formatOnSave": true,
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    "**/env": true
+  },
+  "editor.fontFamily": "Hack",
+  "workbench.colorCustomizations": {
+    "editorCursor.background": "#ff0000",
+    "editor.background": "#ffffff",
+    "editor.selectionBackground": "#7feca9",
+    "editor.selectionHighlightBackground": "#ffc2c2"
+  },
+  "vim.iskeyword": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-_",
+  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-_",
+  "workbench.activityBar.visible": false,
+  "workbench.statusBar.visible": true,
+  "editor.renderControlCharacters": true,
+  "elixirLS.dialyzerFormat": "dialyxir_long",
+  "rust-analyzer.enableEnhancedTyping": false
+}
