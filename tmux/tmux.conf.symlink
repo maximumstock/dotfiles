@@ -51,3 +51,8 @@ set -g focus-events on
 ##############################
 
 source ~/.dotfiles/tmux/theme.sh
+
+# Update the status bar every second, instead of the default 15(!)
+# seconds. It doesn't look like it's possible to update more than
+# once per second, unfortunately.
+set-option -g status-interval 1
