@@ -3,6 +3,9 @@ indent_size = 2
 indent_style = space
 trim_trailing_whitespace = true
 insert_final_newline = true
+end_of_line=lf
+max_line_length=off
+charset=utf-8
 
 [*.{conf,java,xml,rs,py,c,cpp}]
 indent_size = 4
