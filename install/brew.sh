@@ -8,28 +8,35 @@ fi
 echo "Installing homebrew packages..."
 
 # misc
-brew install ack
+# brew install ack
 brew install tree
 brew install wget
 # brew install logstalgia
-brew install htop
 # brew install goaccess
-brew install reattach-to-user-namespace # needed for tmux
+brew install htop
 brew install git
 brew install tmux
+brew install reattach-to-user-namespace # needed for tmux
+
 brew install zsh
 brew install antigen
+
 brew install z
 brew install neovim/neovim/neovim
+
 brew install --with-cocoa --srgb emacs
 brew linkapps emacs
+
 brew install pyenv
 brew install pyenv-virtualenv
+
+brew install fzf
+$(brew --prefix)/opt/fzf/install
 brew install ripgrep
 
 # dev env
 brew install nvm
-brew install elixir
+# brew install elixir
 # brew cask install java
 # brew install neo4j
 
