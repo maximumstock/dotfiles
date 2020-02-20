@@ -21,8 +21,9 @@ brew install zsh
 brew install antigen
 brew install z
 brew install neovim/neovim/neovim
-brew install --with-cocoa --srgb emacs
-brew linkapps emacs
+# brew install --with-cocoa --srgb emacs
+# brew linkapps emacs
+brew install emacs-plus --HEAD --without-spacemacs-icon --with-jansson --without-multicolor-fonts
 brew install pyenv
 brew install pyenv-virtualenv
 brew install ripgrep

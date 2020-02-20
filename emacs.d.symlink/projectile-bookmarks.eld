@@ -1,1 +1,1 @@
-("~/code/poe-currency-flip-planner/" "~/.dotfiles/" "~/todo/")
+("~/.dotfiles/" "~/code/AoC2019/" "~/.rustup/toolchains/stable-x86_64-apple-darwin/lib/rustlib/src/rust/src/libcore/" "~/code/poe-currency-flip-planner/" "~/todo/")

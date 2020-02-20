@@ -4,6 +4,7 @@
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
+;;(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (package-initialize)
@@ -31,7 +32,7 @@
 (setq gc-cons-threshold 32000000
 			garbage-collection-messages t)
 
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 (prefer-coding-system 'utf-8)
 
 (global-auto-revert-mode t)
@@ -53,7 +54,7 @@
 (setq create-lockfiles nil)
 
 ; Show matching parentheses
-; (show-paren-mode 1)
+(show-paren-mode 1)
 
 ; Delete trailing whitespace before saving
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -128,10 +129,14 @@
       (interactive)
       (evil-delete (point-at-bol) (point))))
   (modify-syntax-entry ?_ "w")
+  (modify-syntax-entry ?- "w")
   )
 (use-package evil-surround
 	:config
   (global-evil-surround-mode))
+(use-package evil-goggles
+	:ensure t
+  :config (evil-goggles-mode))
 (evil-mode 1)
 
 (use-package org-bullets)
@@ -164,7 +169,19 @@
 
 (use-package git-gutter
   :ensure t
-  :init (global-git-gutter-mode t))
+  :init (global-git-gutter-mode t)
+	:config
+	(set-face-background 'git-gutter:added "light green")
+	(set-face-background 'git-gutter:modified "orange")
+	(set-face-background 'git-gutter:deleted "red")
+
+	(custom-set-variables
+		'(git-gutter:added-sign " ")
+		'(git-gutter:modified-sign " ")
+		'(git-gutter:deleted-sign " ")
+		)
+
+)
 (use-package evil-magit :ensure t)
 (use-package magit
   :ensure t
@@ -238,9 +255,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+	'(custom-safe-themes
+		 '("b583823b9ee1573074e7cbfd63623fe844030d911e9279a7c8a5d16de7df0ed0" "585942bb24cab2d4b2f74977ac3ba6ddbd888e3776b9d2f993c5704aa8bb4739" "8e797edd9fa9afec181efbfeeebf96aeafbd11b69c4c85fa229bb5b9f7f7e66c" "1436d643b98844555d56c59c74004eb158dc85fc55d2e7205f8d9b8c860e177f" "2b9dc43b786e36f68a9fd4b36dd050509a0e32fe3b0a803310661edb7402b8b6" "8f97d5ec8a774485296e366fdde6ff5589cf9e319a584b845b6f7fa788c9fa9a" "a22f40b63f9bc0a69ebc8ba4fbc6b452a4e3f84b80590ba0a92b4ff599e53ad0" default))
+ '(git-gutter:added-sign " ")
+ '(git-gutter:deleted-sign " ")
+ '(git-gutter:modified-sign " ")
+ '(global-visual-line-mode t)
 	'(package-selected-packages
-		 (quote
-			 (pipenv general nvm flycheck company evil-magit git-gutter org-bullets evil-surround evil which-key powerline rainbow-delimiters gruvbox-theme counsel-projectile projectile counsel ivy editorconfig exec-path-from-shell use-package))))
+		 '(evil-goggles lsp-mode rustic neotree which-key use-package rainbow-delimiters powerline pipenv org-bullets nvm lv ht gruvbox-theme git-gutter general flycheck-rust exec-path-from-shell evil-surround evil-magit eglot editorconfig counsel-projectile company cargo)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
