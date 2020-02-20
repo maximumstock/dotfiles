@@ -1,7 +1,7 @@
 # gitconfig
 [user]
-	name = Maximilian Stock
-	email = me@maximumstock.net
+    name = Maximilian Stock
+    email = me@maximumstock.net
 [github]
     user = maximumstock
 [color]
@@ -32,9 +32,8 @@
     excludesfile = ~/.gitignore_global
     editor = vim
     whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
-	autocrlf = false
 [filter "lfs"]
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
-	required = true
+	  clean = git-lfs clean -- %f
+	  smudge = git-lfs smudge -- %f
+	  process = git-lfs filter-process
+	  required = true
