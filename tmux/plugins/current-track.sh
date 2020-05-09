@@ -8,12 +8,12 @@ global artistName
 set songName to ""
 set artistName to ""
 
-if appIsRunning("iTunes") then
-	tell application "iTunes"
+if appIsRunning("Music") then
+	tell application "Music"
 		if player state is playing then
 			set songName to the name of the current track
 			set artistName to the artist of the current track
-			songName & " - " & artistName
+      return songName & " - " & artistName
 		end if
 	end tell
 end if
@@ -23,7 +23,7 @@ if appIsRunning("Spotify") then
 		if player state is playing then
 			set songName to the name of the current track
 			set artistName to the artist of the current track
-			songName & " - " & artistName
+      return songName & " - " & artistName
 		end if
 	end tell
 end if
@@ -31,6 +31,7 @@ end if
 on appIsRunning(appName)
 	tell application "System Events" to (name of processes) contains appName
 end appIsRunning
+
 EOF
 )
 
