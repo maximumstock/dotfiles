@@ -132,11 +132,12 @@
   (modify-syntax-entry ?- "w")
   )
 (use-package evil-surround
-	:config
-  (global-evil-surround-mode))
-(use-package evil-goggles
-	:ensure t
-  :config (evil-goggles-mode))
+  :ensure t
+  :config
+  (global-evil-surround-mode 1))
+;; (use-package evil-goggles
+;; 	:ensure t
+;;   :config (evil-goggles-mode))
 (evil-mode 1)
 
 (use-package org-bullets)
@@ -207,12 +208,12 @@
 (use-package nvm :ensure t)
 
 ;; Map escape to cancel (like C-g)...
-(define-key isearch-mode-map [escape] 'isearch-abort)
-;; isearch
-;; \e seems to work better for terminals
-(define-key isearch-mode-map "\e" 'isearch-abort)
-;; everywhere else
-(global-set-key [escape] 'keyboard-escape-quit)
+;; (define-key isearch-mode-map [escape] 'isearch-abort)
+;; ;; isearch
+;; ;; \e seems to work better for terminals
+;; (define-key isearch-mode-map "\e" 'isearch-abort)
+;; ;; everywhere else
+;; (global-set-key [escape] 'keyboard-escape-quit)
 
 (use-package general
   :config
@@ -232,8 +233,8 @@
 
    ;; Buffers
    "b" '(:ignore t :which-key "Buffers")
-   "b b" '(switch-to-buffer :which-key "list buffers")
-   "b k" '(kill-buffer :which-key "kill buffer")
+   "b b" '(switch-to-buffer :which-key "switch")
+   "b k" '(kill-buffer :which-key "kill")
 
    ;; Windows
    "w" '(:ignore t :which-key "Windows")
@@ -244,28 +245,12 @@
    "w k" '(delete-window :which-key "delete current")
 
    ;; Applications
-   ;; "p" ('projectile-switch-project :which-key "Switch Project")
    "p" '(projectile-command-map :which-key "Projectile")
    "a" '(:ignore t :which-key "Applications")
    "ad" 'dired
    "g" '(magit-status :which-key "Magit")
+   "l" '(lsp-command-keymap :which-key "LSP")
+   "e" '(:ignore t :which-key "Eval")
+   "et" '(org-babel-tangle :which-key "Tangle")
+   "eb" '(eval-buffer :which-key "Buffer")
    ))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
-	'(custom-safe-themes
-		 '("b583823b9ee1573074e7cbfd63623fe844030d911e9279a7c8a5d16de7df0ed0" "585942bb24cab2d4b2f74977ac3ba6ddbd888e3776b9d2f993c5704aa8bb4739" "8e797edd9fa9afec181efbfeeebf96aeafbd11b69c4c85fa229bb5b9f7f7e66c" "1436d643b98844555d56c59c74004eb158dc85fc55d2e7205f8d9b8c860e177f" "2b9dc43b786e36f68a9fd4b36dd050509a0e32fe3b0a803310661edb7402b8b6" "8f97d5ec8a774485296e366fdde6ff5589cf9e319a584b845b6f7fa788c9fa9a" "a22f40b63f9bc0a69ebc8ba4fbc6b452a4e3f84b80590ba0a92b4ff599e53ad0" default))
- '(git-gutter:added-sign " ")
- '(git-gutter:deleted-sign " ")
- '(git-gutter:modified-sign " ")
- '(global-visual-line-mode t)
-	'(package-selected-packages
-		 '(evil-goggles lsp-mode rustic neotree which-key use-package rainbow-delimiters powerline pipenv org-bullets nvm lv ht gruvbox-theme git-gutter general flycheck-rust exec-path-from-shell evil-surround evil-magit eglot editorconfig counsel-projectile company cargo)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )

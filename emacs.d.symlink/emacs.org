@@ -177,11 +177,12 @@
   (modify-syntax-entry ?- "w")
   )
 (use-package evil-surround
-	:config
-  (global-evil-surround-mode))
-(use-package evil-goggles
-	:ensure t
-  :config (evil-goggles-mode))
+  :ensure t
+  :config
+  (global-evil-surround-mode 1))
+;; (use-package evil-goggles
+;; 	:ensure t
+;;   :config (evil-goggles-mode))
 (evil-mode 1)
 #+END_SRC
 * org-mode
@@ -247,14 +248,6 @@
   :ensure t
   :init (evil-magit-init))
 #+END_SRC
-* Languages
-** Rust
-#+BEGIN_SRC elisp
-(use-package rustic
-  :ensure t
-  :init (rustic-mode)
-)
-#+END_SRC
 * company
 #+BEGIN_SRC elisp
 (use-package company
@@ -278,6 +271,7 @@
   :hook (prog-mode . flycheck-mode))
 #+END_SRC
 * Language Support
+(use-package lsp-mode)
 ** Node
 #+BEGIN_SRC elisp
 (use-package nvm :ensure t)
@@ -285,12 +279,12 @@
 * Keybindings
 #+BEGIN_SRC elisp
 ;; Map escape to cancel (like C-g)...
-(define-key isearch-mode-map [escape] 'isearch-abort)
-;; isearch
-;; \e seems to work better for terminals
-(define-key isearch-mode-map "\e" 'isearch-abort)
-;; everywhere else
-(global-set-key [escape] 'keyboard-escape-quit)
+;; (define-key isearch-mode-map [escape] 'isearch-abort)
+;; ;; isearch
+;; ;; \e seems to work better for terminals
+;; (define-key isearch-mode-map "\e" 'isearch-abort)
+;; ;; everywhere else
+;; (global-set-key [escape] 'keyboard-escape-quit)
 
 (use-package general
   :config
@@ -310,8 +304,8 @@
 
    ;; Buffers
    "b" '(:ignore t :which-key "Buffers")
-   "b b" '(switch-to-buffer :which-key "list buffers")
-   "b k" '(kill-buffer :which-key "kill buffer")
+   "b b" '(switch-to-buffer :which-key "switch")
+   "b k" '(kill-buffer :which-key "kill")
 
    ;; Windows
    "w" '(:ignore t :which-key "Windows")
@@ -322,11 +316,14 @@
    "w k" '(delete-window :which-key "delete current")
 
    ;; Applications
-   ;; "p" ('projectile-switch-project :which-key "Switch Project")
    "p" '(projectile-command-map :which-key "Projectile")
    "a" '(:ignore t :which-key "Applications")
    "ad" 'dired
    "g" '(magit-status :which-key "Magit")
+   "l" '(lsp-command-keymap :which-key "LSP")
+   "e" '(:ignore t :which-key "Eval")
+   "et" '(org-babel-tangle :which-key "Tangle")
+   "eb" '(eval-buffer :which-key "Buffer")
    ))
 
 #+END_SRC

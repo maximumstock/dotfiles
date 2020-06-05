@@ -15,12 +15,10 @@ if [ "$(uname)" == "Darwin" ]; then
 
     echo "Updating OSX settings"
     source install/osx.sh
-
-    echo "Installing node (from nvm)"
-    source install/nvm.sh
 fi
 
 echo "Configuring zsh as default shell"
 sudo chsh -s $(which zsh) $(whoami)
+source install/zsh.sh
 
 echo "Done."

@@ -17,4 +17,4 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 alias -g ......='../../../../..'
 
-alias gitlog="git log --graph --pretty=format:'%Cred%h %Cgreen(%cr) %Cblue%an%Creset: %s - %Creset %C(yellow)%d%Creset' --abbrev-commit --date=relative"
+alias gitlog="git log --graph --pretty=format:'%Cred%h %Cgreen(%cr) %Cblue%an%Creset: %s - %Creset%C(yellow)%ai%Creset' --abbrev-commit --date=relative"

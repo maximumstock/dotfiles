@@ -21,6 +21,9 @@ export PATH=$PATH:$HOME/.cargo/bin
 export WORKON_HOME=$HOME/.pyenv/versions
 export PATH=$PATH:$HOME/.pyenv/bin
 
+# Python poetry
+export PATH=$PATH:$HOME/.poetry/bin
+
 export DOTFILES=$HOME/.dotfiles
 export ZSH=$DOTFILES/zsh
 export NVM_DIR="$HOME/.nvm"
