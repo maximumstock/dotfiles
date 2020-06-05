@@ -12,6 +12,7 @@ brew install wget
 brew install htop
 brew install git
 brew install tmux
+git clone https://github.com/tmux-plugins/tmux-resurrect ~/.dotfiles/tmux/plugins/tmux-resurrect
 brew install reattach-to-user-namespace # needed for tmux
 brew install zsh
 brew install z
