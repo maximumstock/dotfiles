@@ -23,6 +23,8 @@ export PATH=$PATH:$HOME/.pyenv/bin
 
 # Python poetry
 export PATH=$PATH:$HOME/.poetry/bin
+# FNM
+export PATH=$Path:/home/maximumstock/.fnm
 
 export DOTFILES=$HOME/.dotfiles
 export ZSH=$DOTFILES/zsh
@@ -35,3 +37,4 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 	export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 	export JAVA_HOME=$(/usr/libexec/java_home -v1.8)
 fi
+
