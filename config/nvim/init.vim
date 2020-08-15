@@ -5,11 +5,9 @@
 set nocompatible
 call plug#begin()
 
-" Load plugins
-
 " GUI enhancements
 Plug 'itchyny/lightline.vim'
-"Plug 'w0rp/ale'
+Plug 'w0rp/ale'
 Plug 'machakann/vim-highlightedyank'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive' " git wrapper for vim
@@ -17,15 +15,8 @@ Plug 'airblade/vim-gitgutter' " show git diffs in editor
 
 " Fuzzy finder
 Plug 'airblade/vim-rooter'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
-" Semantic language support
-"Plug 'ncm2/ncm2'
-
-" Completion plugins
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-path'
 
 " Syntactic language support
 Plug 'cespare/vim-toml'
@@ -34,7 +25,16 @@ Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'HerringtonDarkholme/yats.vim'
 
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'morhetz/gruvbox'
+
+let g:LanguageClient_serverCommands = {
+\ 'rust': ['rust-analyzer'],
+\ }
+
 call plug#end()
+
+let mapleader = ","
 
 " deal with colors
 if !has('gui_running')
@@ -44,12 +44,16 @@ endif
 "   " screen does not (yet) support truecolor
 "   set termguicolors
 " endif
-" " Colors
+
+" Colors
 set background=dark
-colorscheme smyck
-hi Normal ctermbg=NONE
-" Get syntax
+colorscheme gruvbox
 syntax on
+
+let g:gitgutter_max_signs = 500
+let g:gitgutter_map_keys = 0
+let g:gitgutter_override_sign_column_highlight = 0
+hi clear SignColumn
 hi GitGutterAdd    guifg=#009900 guibg=<X> ctermfg=2
 hi GitGutterChange guifg=#bbbb00 guibg=<X> ctermfg=3
 hi GitGutterDelete guifg=#ff2222 guibg=<X> ctermfg=1
@@ -65,7 +69,8 @@ if executable('rg')
 endif
 
 " Open hotkeys
-map <C-p> :Files<CR>
+" map <C-p> :Files<CR>
+nnoremap <C-p> :GFiles<CR>
 nmap <C-b> :Buffers<CR>
 
 " Completion
@@ -73,7 +78,8 @@ nmap <C-b> :Buffers<CR>
 set completeopt=noinsert,menuone,noselect
 " tab to select
 " and don't hijack my enter key
-inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
+" inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
+inoremap <expr><Tab> "\<C-n>"
 inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
 
 " =============================================================================
@@ -101,7 +107,7 @@ set signcolumn=yes
 " Sane splits
 set splitright
 set splitbelow
- 
+
 " Permanent undo
 set undodir=~/.vimdid
 set undofile
@@ -144,7 +150,7 @@ set ttyfast
 set lazyredraw
 set synmaxcol=500
 set laststatus=2
-" set relativenumber " Relative line numbers
+set relativenumber " Relative line numbers
 set number " Also show current absolute line
 set diffopt+=iwhite " No whitespace in vimdiff
 " Make diffing better: https://vimways.org/2018/the-power-of-diff/
@@ -174,12 +180,12 @@ set clipboard=unnamed "sets the default copy register to be *
 set clipboard=unnamedplus "sets the default copy register to be +
 
 " No arrow keys --- force yourself to use the home row
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
+" nnoremap <up> <nop>
+" nnoremap <down> <nop>
+" inoremap <up> <nop>
+" inoremap <down> <nop>
+" inoremap <left> <nop>
+" inoremap <right> <nop>
 
 set iskeyword-=_
 set iskeyword-=-
@@ -187,6 +193,67 @@ set iskeyword-=-
 " I can type :help on my own, thanks.
 map <F1> <Esc>
 imap <F1> <Esc>
+
+" ===
+" # CoC config
+" ===
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" https://github.com/neoclide/coc.nvim#example-vim-configuration
+inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <silent><expr> <NUL> coc#refresh()
+" inoremap <silent><expr> <c-space> coc#refresh()
+" inoremap <C-@> <c-x><c-o>
+
+" gd - go to definition of word under cursor
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" gh - get hint on whatever's under the cursor
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+nnoremap <silent> gh :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+nnoremap <silent> <leader>co  :<C-u>CocList outline<cr>
+nnoremap <silent> <leader>cs  :<C-u>CocList -I symbols<cr>
+
+" List errors
+nnoremap <silent> <leader>cl  :<C-u>CocList locationlist<cr>
+
+" list commands available in tsserver (and others)
+nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
+
+" restart when tsserver gets wonky
+nnoremap <silent> <leader>cR  :<C-u>CocRestart<CR>
+
+" view all errors
+nnoremap <silent> <leader>cl  :<C-u>CocList locationlist<CR>
+
+" manage extensions
+nnoremap <silent> <leader>cx  :<C-u>CocList extensions<cr>
+
+" rename the current word in the cursor
+nmap <leader>cr  <Plug>(coc-rename)
+nmap <leader>cf  <Plug>(coc-format-selected)
+vmap <leader>cf  <Plug>(coc-format-selected)
+
+" run code actions
+vmap <leader>ca  <Plug>(coc-codeaction-selected)
+nmap <leader>ca  <Plug>(coc-codeaction-selected)
 
 
 " =============================================================================

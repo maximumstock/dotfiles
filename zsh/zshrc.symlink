@@ -23,7 +23,7 @@ if ! zgen saved; then
 
   zgen load zsh-users/zsh-autosuggestions
   zgen load zsh-users/zsh-syntax-highlighting
-  zgen load popstas/zsh-command-time
+  # zgen load popstas/zsh-command-time
   zgen load zsh-users/zsh-completions
 
   # generate the init script from plugins above
@@ -33,3 +33,4 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(fnm env --multi)"
 eval "$(pyenv init -)"
+eval "$(starship init zsh)"

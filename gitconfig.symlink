@@ -1,7 +1,7 @@
 # gitconfig
 [user]
     name = Maximilian Stock
-    email = me@maximumstock.net
+    email = maximilian.stock@mayflower.de
 [github]
     user = maximumstock
 [color]
@@ -37,3 +37,5 @@
 	  smudge = git-lfs smudge -- %f
 	  process = git-lfs filter-process
 	  required = true
+[pull]
+	rebase = true

@@ -9,3 +9,7 @@ charset=utf-8
 
 [*.{conf,java,xml,rs,py,c,cpp}]
 indent_size = 4
+
+[Makefile]
+indent_style = 2
+indent_size = 2
