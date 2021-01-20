@@ -31,6 +31,10 @@ if ! zgen saved; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(fnm env --multi)"
+eval "$(fnm env)"
 eval "$(pyenv init -)"
 eval "$(starship init zsh)"
+eval $(docker-machine env devMayflower)
+
+TIMEFMT=$'\n================\nCPU\t%P\nuser\t%*U\nsystem\t%*S\ntotal\t%*E'
+

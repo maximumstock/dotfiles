@@ -34,7 +34,7 @@ export NVM_DIR="$HOME/.nvm"
 if [[ "$OSTYPE" == "darwin"* ]]; then
 	export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 	export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
-	export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+	# export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 	export JAVA_HOME=$(/usr/libexec/java_home -v1.8)
 fi
 
