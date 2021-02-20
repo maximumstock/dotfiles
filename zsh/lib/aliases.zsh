@@ -3,7 +3,7 @@
 
 # alias sudo so I can use my aliases with the sudo command
 alias sudo="sudo "
-alias ll="ls -la"
+alias ll="ls -lah"
 alias vim="nvim"
 alias gca="open -a Google\ Chrome --args --disable-web-security --user-data-dir=\"\""
 
