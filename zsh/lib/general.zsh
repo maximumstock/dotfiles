@@ -8,7 +8,7 @@ zle -N self-insert url-quote-magic
 # Set Apple Terminal.app resume directory
 # Lets you open new tabs with the same directory with CMD + T
 # Source: http://superuser.com/questions/313650/resume-zsh-terminal-os-x-lion
-if [[ $TERM_PROGRAM == "Apple_Terminal" ]] && [[ -z "$INSIDE_EMACS" ]] {
+if [[ $TERM_PROGRAM == "Alacritty" ]] && [[ -z "$INSIDE_EMACS" ]] {
   function chpwd {
     local SEARCH=' '
     local REPLACE='%20'
