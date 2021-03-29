@@ -10,10 +10,10 @@ source $ZSH/lib/hotkeys.zsh
 source $ZSH/lib/completion.zsh
 
 #initialize autocomplete
-# autoload -U compinit
-# for dump in ~/.zcompdump(N.mh+24); do
-#   compinit
-# done
+autoload -U compinit
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
 
 # load zgen
 source "${HOME}/.zgen/zgen.zsh"
@@ -23,7 +23,7 @@ if ! zgen saved; then
 
   zgen load zsh-users/zsh-autosuggestions
   zgen load zsh-users/zsh-syntax-highlighting
-  # zgen load popstas/zsh-command-time
+  zgen load popstas/zsh-command-time
   zgen load zsh-users/zsh-completions
 
   # generate the init script from plugins above
@@ -31,10 +31,15 @@ if ! zgen saved; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-eval "$(fnm env)"
-eval "$(pyenv init -)"
+
+if [[ $(uname -s) == Darwin ]]
+then
+  eval "$(fnm env)"
+  eval "$(pyenv init -)"
+  eval $(docker-machine env devMayflower)
+fi
+
 eval "$(starship init zsh)"
-eval $(docker-machine env devMayflower)
 
 TIMEFMT=$'\n================\nCPU\t%P\nuser\t%*U\nsystem\t%*S\ntotal\t%*E'
 
