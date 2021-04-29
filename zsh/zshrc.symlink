@@ -36,7 +36,6 @@ if [[ $(uname -s) == Darwin ]]
 then
   eval "$(fnm env)"
   eval "$(pyenv init -)"
-  eval $(docker-machine env devMayflower)
 fi
 
 eval "$(starship init zsh)"
