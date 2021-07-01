@@ -11,12 +11,13 @@ off
 output DP-5
 off
 output DP-4
-crtc 0
+crtc 1
 mode 2560x1440
 pos 440x0
 rate 143.86
 output DP-0
-crtc 1
+crtc 0
 mode 3440x1440
 pos 0x1440
+primary
 rate 144.00
