@@ -21,6 +21,7 @@
     pkgs.autorandr
     pkgs.playerctl
     pkgs.rofi
+    pkgs.betterlockscreen
   ];
 
   # This value determines the Home Manager release that your
