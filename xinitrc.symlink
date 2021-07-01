@@ -3,3 +3,5 @@ autorandr --load home
 setxkbmap -option ctrl:nocaps
 # Key Press Rate
 xset r rate 250
+# Set Wallpaper
+feh --randomize --bg-fill ~/.wallpaper.png
