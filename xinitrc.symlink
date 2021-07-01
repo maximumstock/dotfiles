@@ -1,3 +1,5 @@
 autorandr --load home
+# Switch CapsLock with Ctrl
 setxkbmap -option ctrl:nocaps
+# Key Press Rate
 xset r rate 250

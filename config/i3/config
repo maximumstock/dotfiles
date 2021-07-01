@@ -209,5 +209,5 @@ smart_gaps on
 smart_borders on
 
 # wallpaper
-exec_always --no-startup-id feh --randomize --bg-fill ~/.wallpaper.png
 exec --no-startup-id autorandr --load home
+exec_always --no-startup-id feh --randomize --bg-fill ~/.wallpaper.png
