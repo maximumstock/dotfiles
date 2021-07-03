@@ -9,6 +9,8 @@
   home.username = "maximumstock";
   home.homeDirectory = "/home/maximumstock";
 
+  fonts.fontconfig.enable = true;
+
   home.packages = [
     pkgs.chromium
     pkgs.spotify
@@ -22,6 +24,9 @@
     pkgs.playerctl
     pkgs.rofi
     pkgs.betterlockscreen
+
+    pkgs.font-awesome
+    pkgs.material-icons
   ];
 
   # This value determines the Home Manager release that your
