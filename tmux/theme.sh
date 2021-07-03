@@ -51,3 +51,4 @@ tm_current_track="#[fg=$tm_color_inactive]#(~/.dotfiles/tmux/plugins/current-tra
 
 set -g status-left $tm_session_name' '
 set -g status-right $tm_current_track' '$tm_date' '$tm_host
+set -g status-bg black
