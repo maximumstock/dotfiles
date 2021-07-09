@@ -141,6 +141,7 @@
     curl
     wget
     ripgrep
+    docker-compose
   ];
 
   environment.variables = {
