@@ -5,6 +5,8 @@ if test ! $(which brew); then
     ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 echo "Installing homebrew packages..."
 
 brew install tree
@@ -17,10 +19,8 @@ brew install reattach-to-user-namespace # needed for tmux
 brew install zsh
 brew install z
 brew install neovim/neovim/neovim
-brew install emacs-plus --HEAD --without-spacemacs-icon --with-jansson --without-multicolor-fonts
 brew install Schniz/tap/fnm
-brew install pyenv
-brew install pyenv-virtualenv
 brew install fzf && $(brew --prefix)/opt/fzf/install
 brew install ripgrep
-
+brew install --cask michaelvillar-timer
+brew install starship
