@@ -5,7 +5,7 @@
 alias sudo="sudo "
 alias ll="ls -lah"
 alias vim="nvim"
-alias gca="open -a Google\ Chrome --args --disable-web-security --user-data-dir=\"\""
+alias gca="open -na Google\ Chrome --args --disable-web-security --user-data-dir=\"\""
 
 # Changing/making/removing directory
 setopt auto_pushd
