@@ -32,7 +32,7 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-[ -e starship ] && eval "$(starship init zsh)"
+[ $(command -v starship) ] && eval "$(starship init zsh)"
 
 TIMEFMT=$'\n================\nCPU\t%P\nuser\t%*U\nsystem\t%*S\ntotal\t%*E'
 
