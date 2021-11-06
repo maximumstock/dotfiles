@@ -47,10 +47,15 @@ bindsym $mod+Shift+m exec betterlockscreen -l -s
 # bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Media Keys
-bindsym F1 exec playerctl play-pause
-bindsym F2 exec playerctl stop
-bindsym F3 exec playerctl previous
-bindsym F4 exec playerctl next
+bindsym F1 exec "playerctl --player spotify,vlc play-pause"
+bindsym F2 exec "playerctl --player spotify,vlc stop"
+bindsym F3 exec "playerctl --player spotify,vlc previous"
+bindsym F4 exec "playerctl --player spotify,vlc next"
+
+bindsym Shift+F1 exec "playerctl --player chromium,firefox play-pause"
+bindsym Shift+F2 exec "playerctl --player chromium,firefox stop"
+bindsym Shift+F3 exec "playerctl --player chromium,firefox previous"
+bindsym Shift+F4 exec "playerctl --player chromium,firefox next"
 
 # Volume
 bindsym F5 exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
@@ -209,7 +214,7 @@ bar {
 # i3-gaps
 for_window [class=".*"] border pixel 2
 client.focused #4c7899 #285577 #ffffff #2e9ef4 #ffffff
-gaps inner 15
+gaps inner 8
 smart_gaps on
 smart_borders on
 

@@ -35,6 +35,8 @@ end appIsRunning
 EOF
 )
 
+CURRENT_TRACK=$(playerctl metadata --player spotify --player vlc --format '{{artist}} - {{title}}')
+
 if test "x$CURRENT_TRACK" != "x"; then
   echo $CURRENT_TRACK
 fi

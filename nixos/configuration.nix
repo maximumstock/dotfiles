@@ -44,7 +44,7 @@
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-  
+
   fonts = {
     enableDefaultFonts = true;
     fontconfig = {
@@ -75,7 +75,7 @@
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  
+
   services.xserver.desktopManager.xterm.enable = false;
   services.xserver.displayManager.defaultSession = "none+i3";
 
@@ -120,7 +120,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.maximumstock = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
   };
 
   # List packages installed in system profile. To search, run:
@@ -141,7 +141,8 @@
     curl
     wget
     ripgrep
-    docker-compose
+    vscode
+    wineWowPackages.stable
   ];
 
   environment.variables = {

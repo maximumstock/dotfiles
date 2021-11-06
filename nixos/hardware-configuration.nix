@@ -10,8 +10,12 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-amd" "v4l2loopback" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+
+  boot.extraModprobeConfig = ''
+    options v4l2loopback exclusive_caps=1 max_buffers=2
+  '';
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/02e110f2-71a5-41d9-849a-7d95efbdb765";
@@ -24,6 +28,8 @@
     };
 
   swapDevices = [ ];
+
+  hardware.opengl.driSupport32Bit = true;
 
   # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;

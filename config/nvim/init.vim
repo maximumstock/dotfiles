@@ -47,7 +47,6 @@ endif
 " endif
 
 " Colors
-set background=dark
 colorscheme gruvbox
 syntax on
 

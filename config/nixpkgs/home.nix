@@ -24,7 +24,14 @@
     pkgs.playerctl
     pkgs.rofi
     pkgs.betterlockscreen
-
+    pkgs.git-extras
+    pkgs.anki
+    pkgs.signal-desktop
+    pkgs.pavucontrol
+    pkgs.lldb
+    pkgs.keepassxc
+    pkgs.go-sct
+    # i3 polybar
     pkgs.font-awesome
     pkgs.material-icons
   ];
