@@ -31,6 +31,7 @@
     pkgs.lldb
     pkgs.keepassxc
     pkgs.go-sct
+    pkgs.jq
     # i3 polybar
     pkgs.font-awesome
     pkgs.material-icons

@@ -153,9 +153,9 @@ interval = 10
 format-margin = 4
 
 time = "%H:%M"
-date = "%d %b"
+date = "%B %d"
 
-label = %time% | %date%
+label = %date%  -  %time%
 label-background = ${colors.background}
 label-padding = 2
 
