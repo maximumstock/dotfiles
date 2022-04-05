@@ -89,6 +89,20 @@
     ];
   };
 
+  services.udev.extraRules = ''
+    # Wally Moonlander Flashing
+    # STM32 rules for the Moonlander and Planck EZ
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="df11", \
+    MODE:="0666", \
+    SYMLINK+="stm32_dfu"
+
+    # Moonlander Live Training
+    # Rule for all ZSA keyboards
+    SUBSYSTEM=="usb", ATTR{idVendor}=="3297", GROUP="plugdev"
+    # Rule for the Moonlander
+    SUBSYSTEM=="usb", ATTR{idVendor}=="3297", ATTR{idProduct}=="1969", GROUP="plugdev"
+  '';
+
   # MPD
   services.mpd = {
     enable = true;
@@ -117,10 +131,12 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  users.groups.plugdev = {};
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.maximumstock = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "docker" "plugdev" ]; # Enable ‘sudo’ for the user.
   };
 
   # List packages installed in system profile. To search, run:
@@ -141,7 +157,6 @@
     curl
     wget
     ripgrep
-    vscode
     wineWowPackages.stable
   ];
 
@@ -162,6 +177,7 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+  programs.ssh.startAgent = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -170,6 +186,7 @@
   networking.firewall.enable = false;
 
   virtualisation.docker.enable = true;
+  virtualisation.docker.extraOptions = "--metrics-addr 127.0.0.1:9323 --experimental";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

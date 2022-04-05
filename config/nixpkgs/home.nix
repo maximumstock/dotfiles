@@ -14,7 +14,6 @@
   home.packages = [
     pkgs.chromium
     pkgs.spotify
-    pkgs.vscodium
     pkgs.poetry
     (pkgs.mumble.override { pulseSupport = true; })
     pkgs.feh
@@ -32,6 +31,12 @@
     pkgs.keepassxc
     pkgs.go-sct
     pkgs.jq
+    pkgs.wally-cli
+    pkgs.flameshot
+    pkgs.foxitreader
+    pkgs.vscode
+    pkgs.nodejs
+    pkgs.difftastic
     # i3 polybar
     pkgs.font-awesome
     pkgs.material-icons

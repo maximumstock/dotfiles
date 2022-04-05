@@ -1,4 +1,4 @@
-autorandr --load home
+autorandr --load home-single
 # Switch CapsLock with Ctrl
 setxkbmap -option ctrl:nocaps
 # Key Press Rate

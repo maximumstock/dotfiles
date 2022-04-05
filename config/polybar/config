@@ -30,7 +30,7 @@ background = ${xrdb:background:#000}
 ; |_.__/ \__,_|_|  |___/
 
 [bar/DP0]
-monitor = DP-0
+monitor = DP-4
 enable-ipc=true
 height = 30
 width = 100%
@@ -65,7 +65,7 @@ pin-workspaces = true
 
 [bar/DP4]
 inherit = bar/DP0
-monitor = DP-4
+monitor = DP-0
 
 ;                      _       _
 ;  _ __ ___   ___   __| |_   _| | ___  ___
@@ -149,10 +149,10 @@ ramp-signal-color1 = ${colors.color1}
 
 [module/time]
 type = internal/date
-interval = 10
+interval = 1
 format-margin = 4
 
-time = "%H:%M"
+time = "%H:%M:%S"
 date = "%B %d"
 
 label = %date%  -  %time%
