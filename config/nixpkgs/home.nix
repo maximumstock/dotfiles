@@ -37,9 +37,11 @@
     pkgs.vscode
     pkgs.nodejs
     pkgs.difftastic
+    pkgs.delta
     # i3 polybar
     pkgs.font-awesome
     pkgs.material-icons
+    pkgs.xclip
   ];
 
   # This value determines the Home Manager release that your

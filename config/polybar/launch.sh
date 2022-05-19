@@ -5,7 +5,7 @@ pgrep polybar | xargs kill
 
 while pgrep polybar >/dev/null; do sleep 1; done
 
-polybar DP0 &
 polybar DP4 &
+polybar DP0 &
 
 echo "Polybar launched..."

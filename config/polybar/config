@@ -30,7 +30,7 @@ background = ${xrdb:background:#000}
 ; |_.__/ \__,_|_|  |___/
 
 [bar/DP0]
-monitor = DP-4
+monitor = DP-0
 enable-ipc=true
 height = 30
 width = 100%
@@ -64,8 +64,8 @@ wm-restack = i3
 pin-workspaces = true
 
 [bar/DP4]
-inherit = bar/DP0
-monitor = DP-0
+inherit = bar/DP4
+monitor = DP-4
 
 ;                      _       _
 ;  _ __ ___   ___   __| |_   _| | ___  ___

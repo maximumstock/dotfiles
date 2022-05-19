@@ -1,4 +1,5 @@
 #### COLOUR
+set -ga terminal-overrides ",xterm-256color:Tc"
 
 tm_icon="☀"
 tm_color_active=white

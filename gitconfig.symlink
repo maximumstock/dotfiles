@@ -1,4 +1,3 @@
-# gitconfig
 [user]
     name = Maximilian Stock
     email = mxmlnstock@googlemail.com
@@ -32,12 +31,29 @@
     excludesfile = ~/.gitignore_global
     editor = nvim
     whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
+    pager = delta
 [filter "lfs"]
 	  clean = git-lfs clean -- %f
 	  smudge = git-lfs smudge -- %f
 	  process = git-lfs filter-process
 	  required = true
 [pull]
-	rebase = true
-[diff]
-	external = difftastic
+    rebase = true
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    features = theme interactive
+    navigate = true
+    line-numbers = true
+    side-by-side = true
+[delta "interactive"]
+    keep-plus-minus-markers = false
+[delta "theme"]
+    syntax-theme = zenburn
+    # commit-decoration-style = blue ol
+    # commit-style = raw
+    # file-style = omit
+    # hunk-header-decoration-style = blue box
+    # hunk-header-file-style = red
+    # hunk-header-line-number-style = "#067a00"
+    # hunk-header-style = file line-number syntax
