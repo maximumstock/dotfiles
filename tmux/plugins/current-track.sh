@@ -38,5 +38,5 @@ EOF
 CURRENT_TRACK=$(playerctl metadata --player spotify,vlc --format '{{artist}} - {{title}}')
 
 if test "x$CURRENT_TRACK" != "x"; then
-  echo $CURRENT_TRACK
+  echo $CURRENT_TRACK | cut -b1-45
 fi
