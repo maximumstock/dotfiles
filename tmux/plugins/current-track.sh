@@ -35,7 +35,11 @@ end appIsRunning
 EOF
 )
 
-CURRENT_TRACK=$(playerctl metadata --player spotify,vlc --format '{{artist}} - {{title}}')
+
+if [[ $(uname -s) != Darwin ]]
+then
+    CURRENT_TRACK=$(playerctl metadata --player spotify,vlc --format '{{artist}} - {{title}}')
+fi
 
 if test "x$CURRENT_TRACK" != "x"; then
   echo $CURRENT_TRACK | cut -b1-45
