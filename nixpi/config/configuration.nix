@@ -5,10 +5,9 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
@@ -73,8 +72,11 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim git htop
+    vim
+    git
+    htop
     raspberrypi-tools
+    nixops
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -97,6 +99,31 @@
     device = "/swapfile";
     size = 1024;
   }];
+
+  virtualisation.docker.enable = true;
+
+  virtualisation.oci-containers.containers = {
+    adguardhome = {
+      image = "adguard/adguardhome:latest";
+      ports = [
+        "53:53/tcp"
+        "53:53/udp"
+        "80:80/tcp"
+        "443:443/tcp"
+        "443:443/udp"
+        "3000:3000/tcp"
+      ];
+      volumes = [
+        "/root/adguardhome/work:/opt/adguardhome/work"
+        "/root/adguardhome/conf:/opt/adguardhome/conf"
+      ];
+      autoStart = true;
+    };
+  };
+
+  networking.nat.enable = true;
+  networking.nat.internalInterfaces = [ "ve-+" ];
+  networking.nat.externalInterface = "eth0";
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

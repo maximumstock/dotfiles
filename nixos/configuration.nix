@@ -5,10 +5,16 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
+
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+    '';
+  };
 
   nixpkgs.config = {
     packageOverrides = pkgs: rec {
@@ -20,7 +26,6 @@
       };
     };
   };
-
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -64,12 +69,9 @@
   };
 
   # Select internationalisation properties.
-  i18n = {
-    defaultLocale = "de_DE.UTF-8";
-  };
+  i18n = { defaultLocale = "de_DE.UTF-8"; };
 
   services.xserver.videoDrivers = [ "nvidia" ];
-
 
   # Enable the GNOME 3 Desktop Environment.
   services.xserver.enable = true;
@@ -81,11 +83,7 @@
   services.xserver.windowManager.i3 = {
     enable = true;
     package = pkgs.i3-gaps;
-    extraPackages = with pkgs; [
-      i3status
-      i3lock
-      polybar
-    ];
+    extraPackages = with pkgs; [ i3status i3lock polybar ];
   };
 
   services.udev.extraRules = ''
@@ -125,12 +123,13 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
-  hardware.pulseaudio.extraConfig = "load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1"; # Needed by mpd to be able to use Pulseaudio
+  hardware.pulseaudio.extraConfig =
+    "load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1"; # Needed by mpd to be able to use Pulseaudio
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  users.groups.plugdev = {};
+  users.groups.plugdev = { };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.maximumstock = {
@@ -185,7 +184,8 @@
   networking.firewall.enable = false;
 
   virtualisation.docker.enable = true;
-  virtualisation.docker.extraOptions = "--metrics-addr 127.0.0.1:9323 --experimental";
+  virtualisation.docker.extraOptions =
+    "--metrics-addr 127.0.0.1:9323 --experimental";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
