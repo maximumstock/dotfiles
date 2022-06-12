@@ -1,7 +1,3 @@
 autorandr --load home-single
-# Switch CapsLock with Ctrl
-setxkbmap -option ctrl:nocaps
-# Key Press Rate
-xset r rate 250
 # Set Wallpaper
 feh --randomize --bg-fill ~/.wallpaper.png

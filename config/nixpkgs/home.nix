@@ -38,6 +38,7 @@
     pkgs.nodejs
     pkgs.difftastic
     pkgs.delta
+    pkgs.gnome.nautilus
     # i3 polybar
     pkgs.font-awesome
     pkgs.material-icons

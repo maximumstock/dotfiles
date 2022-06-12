@@ -217,4 +217,4 @@ gaps inner 8
 smart_gaps on
 smart_borders on
 
-exec --no-startup-id . ~/.xinitrc
+exec --no-startup-id source ~/.xinitrc

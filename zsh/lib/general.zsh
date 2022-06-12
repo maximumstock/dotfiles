@@ -1,6 +1,11 @@
 # General zsh settings
 #############################################################################################
 
+# Switch CapsLock with Ctrl
+setxkbmap -option ctrl:nocaps
+# Key Press Rate
+xset r rate 250
+
 # smart urls
 autoload -U url-quote-magic
 zle -N self-insert url-quote-magic

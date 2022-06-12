@@ -63,7 +63,7 @@
     fonts = with pkgs; [
       noto-fonts
       hack-font
-      font-awesome-ttf
+      font-awesome
       powerline-fonts
     ];
   };
