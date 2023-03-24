@@ -1,11 +1,16 @@
 # Aliases
 #######################################################################################################
 
-# alias sudo so I can use my aliases with the sudo command
-alias sudo="sudo "
+alias sudo="sudo " # alias sudo so I can use my aliases with the sudo command
 alias ll="ls -lah"
 alias vim="nvim"
 alias gca="open -na Google\ Chrome --args --disable-web-security --user-data-dir=\"\""
+
+alias gch="git checkout "
+alias gs="git status"
+alias gap="git add -p"
+alias gco="git commit"
+alias gcm="git commit -m"
 
 # Changing/making/removing directory
 setopt auto_pushd
