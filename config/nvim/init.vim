@@ -5,9 +5,29 @@
 set nocompatible
 call plug#begin()
 
+Plug 'lewis6991/impatient.nvim' " makes Lua faster
+
+Plug 'numToStr/Comment.nvim' " comment toggling
+Plug 'windwp/nvim-autopairs'
+Plug 'tpope/vim-surround' " cs[old][new]
+
 " GUI enhancements
-Plug 'itchyny/lightline.vim'
-Plug 'w0rp/ale'
+Plug 'RRethy/vim-illuminate' " highlight uses of words
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'nvim-tree/nvim-tree.lua'
+" :NvimTreeToggle Open or close the tree. Takes an optional path argument.
+" :NvimTreeFocus Open the tree if it is closed, and then focus on the tree.
+" :NvimTreeFindFile Move the cursor in the tree for the current buffer, opening folders if needed.
+" :NvimTreeCollapse Collapses the nvim-tree recursively.
+Plug 'folke/trouble.nvim'
+
+Plug 'folke/todo-comments.nvim'
+Plug 'nvim-lua/plenary.nvim' " dep for todo-comments
+
+Plug 'nvim-telescope/telescope.nvim'
+
+
+" Plug 'itchyny/lightline.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-fugitive' " git wrapper for vim
@@ -18,20 +38,14 @@ Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
-" Syntactic language support
-Plug 'cespare/vim-toml'
-Plug 'rust-lang/rust.vim'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'LnL7/vim-nix'
-
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'morhetz/gruvbox'
 
-let g:LanguageClient_serverCommands = {
-\ 'rust': ['rust-analyzer'],
-\ }
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'neovim/nvim-lspconfig' " Configurations for Nvim LSP
+Plug 'simrat39/rust-tools.nvim'
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+
 
 call plug#end()
 
@@ -41,10 +55,6 @@ let mapleader = ","
 if !has('gui_running')
   set t_Co=256
 endif
-" if (match($TERM, "-256color") != -1) && (match($TERM, "screen-256color") == -1)
-"   " screen does not (yet) support truecolor
-"   set termguicolors
-" endif
 
 " Colors
 colorscheme gruvbox
@@ -86,6 +96,7 @@ inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"
 " # Editor settings
 " =============================================================================
 filetype plugin indent on
+set guifont=*
 set autoindent
 set timeoutlen=300 " http://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
 set encoding=utf-8
@@ -170,91 +181,11 @@ set listchars=nbsp:¬,extends:»,precedes:«,trail:•
 " # Keyboard shortcuts
 " =============================================================================
 
-" Ctrl+c and Ctrl+j as Esc
-inoremap <C-j> <Esc>
-vnoremap <C-j> <Esc>
-inoremap <C-c> <Esc>
-vnoremap <C-c> <Esc>
-
 set clipboard=unnamed "sets the default copy register to be *
 set clipboard=unnamedplus "sets the default copy register to be +
 
-" No arrow keys --- force yourself to use the home row
-" nnoremap <up> <nop>
-" nnoremap <down> <nop>
-" inoremap <up> <nop>
-" inoremap <down> <nop>
-" inoremap <left> <nop>
-" inoremap <right> <nop>
-
 set iskeyword-=_
 set iskeyword-=-
-
-" I can type :help on my own, thanks.
-map <F1> <Esc>
-imap <F1> <Esc>
-
-" ===
-" # CoC config
-" ===
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" https://github.com/neoclide/coc.nvim#example-vim-configuration
-inoremap <silent><expr> <c-space> coc#refresh()
-inoremap <silent><expr> <NUL> coc#refresh()
-" inoremap <silent><expr> <c-space> coc#refresh()
-" inoremap <C-@> <c-x><c-o>
-
-" gd - go to definition of word under cursor
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gt <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" gh - get hint on whatever's under the cursor
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-nnoremap <silent> gh :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-nnoremap <silent> <leader>co  :<C-u>CocList outline<cr>
-nnoremap <silent> <leader>cs  :<C-u>CocList -I symbols<cr>
-
-" List errors
-nnoremap <silent> <leader>cl  :<C-u>CocList locationlist<cr>
-
-" list commands available in tsserver (and others)
-nnoremap <silent> <leader>cc  :<C-u>CocList commands<cr>
-
-" restart when tsserver gets wonky
-nnoremap <silent> <leader>cR  :<C-u>CocRestart<CR>
-
-" view all errors
-nnoremap <silent> <leader>cl  :<C-u>CocList locationlist<CR>
-
-" manage extensions
-nnoremap <silent> <leader>cx  :<C-u>CocList extensions<cr>
-
-" rename the current word in the cursor
-nmap <leader>cr  <Plug>(coc-rename)
-nmap <leader>cf  <Plug>(coc-format-selected)
-vmap <leader>cf  <Plug>(coc-format-selected)
-
-" run code actions
-vmap <leader>ca  <Plug>(coc-codeaction-selected)
-nmap <leader>ca  <Plug>(coc-codeaction-selected)
-
 
 " =============================================================================
 " # Autocommands
@@ -262,3 +193,110 @@ nmap <leader>ca  <Plug>(coc-codeaction-selected)
 
 " Leave paste mode when leaving insert mode
 autocmd InsertLeave * set nopaste
+lua <<EOF
+local lsp = require "lspconfig"
+local coq = require "coq"
+
+require("mason").setup({
+    ui = {
+        icons = {
+            package_installed = "1",
+            package_pending = "2",
+            package_uninstalled = "3",
+        },
+    }
+})
+require("mason-lspconfig").setup({
+    ensure_installed = { "rust_analyzer", "tsserver", "dockerls", "clangd" }
+})
+
+lsp.rust_analyzer.setup{}
+lsp.dockerls.setup{}
+lsp.clangd.setup{}
+
+local rt = require("rust-tools")
+rt.setup({
+  server = {
+    on_attach = function(_, bufnr)
+      -- Hover actions
+      vim.keymap.set("n", "<Leader>h", rt.hover_actions.hover_actions, { buffer = bufnr })
+      -- Code action groups
+      vim.keymap.set("n", "<Leader>a", rt.code_action_group.code_action_group, { buffer = bufnr })
+    end,
+  },
+})
+
+require('illuminate').configure()
+require('impatient')
+require('Comment').setup()
+require("indent_blankline").setup()
+require("nvim-autopairs").setup()
+require("nvim-tree").setup()
+require("trouble").setup()
+require("todo-comments").setup()
+require('telescope').setup()
+
+-- LSP Diagnostics Options Setup
+local sign = function(opts)
+  vim.fn.sign_define(opts.name, {
+    texthl = opts.name,
+    text = opts.text,
+    numhl = ''
+  })
+end
+
+vim.keymap.set('n', '<leader>f', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>')
+vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>')
+vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>')
+vim.keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>')
+
+sign({name = 'DiagnosticSignError', text = ''})
+sign({name = 'DiagnosticSignWarn', text = ''})
+sign({name = 'DiagnosticSignHint', text = ''})
+sign({name = 'DiagnosticSignInfo', text = ''})
+
+vim.diagnostic.config({
+    virtual_text = false,
+    signs = true,
+    update_in_insert = true,
+    underline = true,
+    severity_sort = false,
+    float = {
+        border = 'rounded',
+        source = 'always',
+        header = '',
+        prefix = '',
+    },
+})
+
+
+vim.cmd([[
+set signcolumn=yes
+autocmd CursorHold * lua vim.diagnostic.open_float(nil, { focusable = false })
+]])
+
+-- # lsp.util.default_config.on_attach = function()
+-- #      vim.call('LspAttached')
+-- # end
+-- # lsp.clangd.setup(coq.lsp_ensure_capabilities({}))
+EOF
+
+function! LspAttached() abort
+  " LSP actions
+  nnoremap <buffer> K <cmd>lua vim.lsp.buf.hover()<cr>
+  nnoremap <buffer> gd <cmd>lua vim.lsp.buf.definition()<cr>
+  nnoremap <buffer> gD <cmd>lua vim.lsp.buf.declaration()<cr>
+  nnoremap <buffer> gi <cmd>lua vim.lsp.buf.implementation()<cr>
+  nnoremap <buffer> go <cmd>lua vim.lsp.buf.type_definition()<cr>
+  nnoremap <buffer> gr <cmd>lua vim.lsp.buf.references()<cr>
+  nnoremap <buffer> <C-k> <cmd>lua vim.lsp.buf.signature_help()<cr>
+  nnoremap <buffer> <F2> <cmd>lua vim.lsp.buf.rename()<cr>
+  nnoremap <buffer> <F4> <cmd>lua vim.lsp.buf.code_action()<cr>
+  xnoremap <buffer> <F4> <cmd>lua vim.lsp.buf.range_code_action()<cr>
+
+  " Diagnostics
+  nnoremap <buffer> gl <cmd>lua vim.diagnostic.open_float()<cr>
+  nnoremap <buffer> [d <cmd>lua vim.diagnostic.goto_prev()<cr>
+  nnoremap <buffer> ]d <cmd>lua vim.diagnostic.goto_next()<cr>
+
+endfunction
