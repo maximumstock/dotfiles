@@ -145,8 +145,6 @@
     libreoffice
     vlc
     parted
-    alacritty
-    neovim
     git
     htop
     tmux

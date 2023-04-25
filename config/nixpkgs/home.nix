@@ -12,6 +12,10 @@
   fonts.fontconfig.enable = true;
 
   home.packages = [
+    pkgs.tmux
+    pkgs.zsh
+    pkgs.alacritty
+    pkgs.neovim
     pkgs.chromium
     pkgs.google-chrome
     pkgs.spotify
@@ -48,6 +52,7 @@
     pkgs.material-icons
     pkgs.xclip
     pkgs.k3b
+    pkgs.unzip
   ];
 
   # This value determines the Home Manager release that your
