@@ -9,8 +9,6 @@
   home.username = "maximumstock";
   home.homeDirectory = "/home/maximumstock";
 
-  fonts.fontconfig.enable = true;
-
   home.packages = [
     pkgs.tmux
     pkgs.zsh

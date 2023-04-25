@@ -24,3 +24,4 @@ brew install fzf && $(brew --prefix)/opt/fzf/install
 brew install ripgrep
 brew install --cask michaelvillar-timer
 brew install starship
+brew install --cask caskroom/fonts/font-hack # nerdfont patched Hack

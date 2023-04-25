@@ -61,10 +61,11 @@
       };
     };
     fonts = with pkgs; [
-      noto-fonts
+      # noto-fonts
       hack-font
-      font-awesome
-      powerline-fonts
+      # font-awesome
+      # powerline-fonts
+      (nerdfonts.override { fonts = [ "Hack" ]; })
     ];
   };
 
