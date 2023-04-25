@@ -1,28 +1,39 @@
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+
+# tmux 24-bit color
+set-option -sa terminal-overrides ",xterm*:Tc"
+
 # tmux display things in 256 colors
-set -g default-terminal "screen-256color"
-set -g history-limit 10000
-set -g mouse on
-set -g renumber-windows on
+# set -g default-terminal "screen-256color"
+# set -g history-limit 10000
+# set -g mouse on
+# set -g renumber-windows on
 
 # unbind default prefix and set it to Ctrl+a
 unbind C-b
 set -g prefix C-a
 bind C-a send-prefix
 
-set -sg escape-time 0
-set -g base-index 1
+# set -sg escape-time 0
+# set -g base-index 1
 
 # split window and fix path for tmux 1.9
 bind | split-window -h -c "#{pane_current_path}"
+bind '%' split-window -h -c '#{pane_current_path}'
+
 bind - split-window -v -c "#{pane_current_path}"
+bind '"' split-window -v -c '#{pane_current_path}'
+
+bind 'c' new-window -c '#{pane_current_path}'
+
+# Documentation of other keybinds to remember
+# <prefix> + !: turns current pane into a window
+# <prefix> + q + index: switch to that pane directly
+# <prefix> + {/}: swap panes
 
 # synchronize all panes in a window
 bind y setw synchronize-panes
-
-# redefine window splits and window creations to open a new pane with the old path
-bind '%' split-window -h -c '#{pane_current_path}'
-bind '"' split-window -v -c '#{pane_current_path}'
-bind 'c' new-window -c '#{pane_current_path}'
 
 # pane selection shortcuts
 bind-key Up     select-pane -U
@@ -40,9 +51,6 @@ bind -r J resize-pane -D 10
 bind -r K resize-pane -U 10
 bind -r L resize-pane -R 10
 
-# Tmux Resurrect
-run-shell ~/.dotfiles/tmux/plugins/tmux-resurrect/resurrect.tmux
-
 # vim-tmux-clipboard https://github.com/roxma/vim-tmux-clipboard
 set -g focus-events on
 
@@ -50,9 +58,12 @@ set -g focus-events on
 ### Color & Style Settings ###
 ##############################
 
-source ~/.dotfiles/tmux/theme.sh
+# source ~/.dotfiles/tmux/theme.sh
 
 # Update the status bar every second, instead of the default 15(!)
 # seconds. It doesn't look like it's possible to update more than
 # once per second, unfortunately.
 set-option -g status-interval 1
+
+# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+run '~/.dotfiles/tmux/plugins/tpm/tpm'

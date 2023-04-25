@@ -13,6 +13,7 @@
 
   home.packages = [
     pkgs.chromium
+    pkgs.google-chrome
     pkgs.spotify
     pkgs.poetry
     (pkgs.mumble.override { pulseSupport = true; })
@@ -39,10 +40,14 @@
     pkgs.difftastic
     pkgs.delta
     pkgs.gnome.nautilus
+    pkgs.discord
+    pkgs.yt-dlp
+    pkgs.zellij
     # i3 polybar
     pkgs.font-awesome
     pkgs.material-icons
     pkgs.xclip
+    pkgs.k3b
   ];
 
   # This value determines the Home Manager release that your
@@ -53,5 +58,5 @@
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "21.05";
+  home.stateVersion = "22.11";
 }
