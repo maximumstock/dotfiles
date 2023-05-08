@@ -18,10 +18,10 @@ git clone https://github.com/tmux-plugins/tmux-resurrect ~/.dotfiles/tmux/plugin
 brew install reattach-to-user-namespace # needed for tmux
 brew install zsh
 brew install z
-brew install neovim/neovim/neovim
-brew install Schniz/tap/fnm
+brew install neovim
+brew install fnm && fnm install v20.1.0
 brew install fzf && $(brew --prefix)/opt/fzf/install
 brew install ripgrep
 brew install --cask michaelvillar-timer
 brew install starship
-brew install --cask caskroom/fonts/font-hack # nerdfont patched Hack
+brew tap homebrew/cask-fonts && brew install font-hack-nerd-font # nerdfont patched Hack
