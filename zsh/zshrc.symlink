@@ -9,7 +9,11 @@ source $ZSH/lib/general.zsh
 source $ZSH/lib/hotkeys.zsh
 source $ZSH/lib/completion.zsh
 
+export SHELL=$(which zsh)
+
 #initialize autocomplete
+export ZSH_AUTOSUGGEST_USE_ASYNC=1
+
 autoload -U compinit
 for dump in ~/.zcompdump(N.mh+24); do
   compinit
@@ -21,6 +25,7 @@ source "${HOME}/.zgen/zgen.zsh"
 # if the init script doesn't exist
 if ! zgen saved; then
 
+  #zgen load spwhitt/nix-zsh-completions
   zgen load zsh-users/zsh-autosuggestions
   zgen load zsh-users/zsh-syntax-highlighting
   zgen load popstas/zsh-command-time
@@ -45,5 +50,34 @@ TIMEFMT=$'\n================\nCPU\t%P\nuser\t%*U\nsystem\t%*S\ntotal\t%*E'
 if [[ $(uname -s) == Darwin ]]
 then
   eval "$(brew shellenv)"
-  [ $(command -v fnm) ] && eval $(fnm env)
+  export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 fi
+
+# Command history related settings
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
+# nvim as default editor
+export EDITOR="nvim"
+export LSCOLORS="Gxfxcxdxbxegedabagacad"
+# enable Erlang/Elixir shell history
+export ERL_AFLAGS="-kernel shell_history enabled"
+# Rust
+export PATH=$PATH:$HOME/.cargo/bin # or: . "$HOME/.cargo/env"
+# Python virtual environments handled by pyenv
+# export WORKON_HOME=$HOME/.pyenv/versions
+export PATH=$PATH:$HOME/.pyenv/bin
+# Python poetry
+export PATH=$PATH:$HOME/.poetry/bin
+# FNM
+[ $(command -v fnm) ] && eval $(fnm env)
+
+# macOS specific stuff
+if [[ "$OSTYPE" == "darwin"* ]]; then
+	export PATH="/opt/homebrew/bin:$PATH"
+	export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
+	export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
+	# export JAVA_HOME=$(/usr/libexec/java_home -v1.8)
+fi
+
