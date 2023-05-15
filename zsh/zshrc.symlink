@@ -1,3 +1,10 @@
+TIMEFMT=$'\n================\nCPU\t%P\nuser\t%*U\nsystem\t%*S\ntotal\t%*E'
+
+# Command history related settings
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
 # load all config files in $ZSH/lib
 ZSH=$HOME/.dotfiles/zsh
 source $ZSH/lib/colors.zsh
@@ -43,21 +50,6 @@ fi
 
 [ $(command -v starship) ] && eval "$(starship init zsh)"
 
-TIMEFMT=$'\n================\nCPU\t%P\nuser\t%*U\nsystem\t%*S\ntotal\t%*E'
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-if [[ $(uname -s) == Darwin ]]
-then
-  eval "$(brew shellenv)"
-  export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-fi
-
-# Command history related settings
-HISTFILE=$HOME/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-
 # nvim as default editor
 export EDITOR="nvim"
 export LSCOLORS="Gxfxcxdxbxegedabagacad"
@@ -74,10 +66,12 @@ export PATH=$PATH:$HOME/.poetry/bin
 [ $(command -v fnm) ] && eval $(fnm env)
 
 # macOS specific stuff
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ $(uname -s) == Darwin ]]; then
 	export PATH="/opt/homebrew/bin:$PATH"
+    eval "$(brew shellenv)"
 	export PATH=$PATH:/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin
 	export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
+    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 	# export JAVA_HOME=$(/usr/libexec/java_home -v1.8)
 fi
 
