@@ -23,6 +23,8 @@ env:
   # available, otherwise `xterm-256color` is used.
   TERM: xterm-256color
 
+alt_send_esc: false # to allow '~'
+
 window:
   # Window dimensions (changes require restart)
   #
