@@ -126,8 +126,19 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
   hardware.pulseaudio.package = pkgs.pulseaudioFull;
-  hardware.pulseaudio.extraConfig =
-    "load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1"; # Needed by mpd to be able to use Pulseaudio
+  hardware.pulseaudio.extraConfig = "
+    load-module module-native-protocol-tcp auth-ip-acl=127.0.0.1 # Needed by mpd to be able to use Pulseaudio
+    load-module module-switch-on-connect
+  ";
+
+  # Bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+  hardware.bluetooth.settings = {
+    General = {
+      Enable = "Source,Sink,Media,Socket";
+    };
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
