@@ -76,8 +76,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+q kill
 
 # Rofi bindings
-bindsym $mod+space exec rofi -show run
-# bindsym $mod+space+W exec rofi -show window
+bindsym $mod+space exec "rofi -show run -modes 'run,calc,window,ssh,filebrowser,keys'"
 
 # change focus
 bindsym $mod+h focus left
