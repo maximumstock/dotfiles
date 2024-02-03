@@ -24,3 +24,10 @@ alias -g ......='../../../../..'
 
 alias gitlog="git log --graph --pretty=format:'%Cred%h %Cgreen(%cr) %Cblue%an%Creset: %s - %Creset%C(yellow)%ai%Creset' --abbrev-commit --date=relative"
 alias dockerbash="docker run --rm -it --entrypoint bash $1"
+
+alias nixf="nix --extra-experimental-features nix-command --extra-experimental-features flakes"
+
+function senv() {
+    echo "Sourcing $1"
+    set -o allexport && source $1 && set +o allexport
+}

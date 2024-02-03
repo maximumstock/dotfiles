@@ -7,7 +7,7 @@ call plug#begin()
 
 Plug 'lewis6991/impatient.nvim' " makes Lua faster
 
-Plug 'numToStr/Comment.nvim' " comment toggling
+Plug 'numToStr/Comment.nvim' " comment toggling -- gc[c]/gb[c]
 Plug 'windwp/nvim-autopairs'
 Plug 'tpope/vim-surround' " cs[old][new]
 
