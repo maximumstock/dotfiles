@@ -8,6 +8,26 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/316afddc-10ff-409d-ab9d-de2459e569d3";
+    fsType = "ext4";
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/391C-C7AF";
+    fsType = "vfat";
+  };
+
+  fileSystems."/srv/tanka" = {
+    device = "/dev/disk/by-label/tanka";
+    fsType = "ext4";
+  };
+
+  fileSystems."/srv/tankb" = {
+    device = "/dev/disk/by-label/tankb";
+    fsType = "ext4";
+  };
+
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];

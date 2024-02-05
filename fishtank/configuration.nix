@@ -15,23 +15,13 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "fishtank";
-  # networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
 
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "de_DE.UTF-8";
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  # users.users.alice = {
-  #   isNormalUser = true;
-  #   extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-  #   packages = with pkgs; [
-  #     firefox
-  #     tree
-  #   ];
-  # };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -46,6 +36,7 @@
     git
     htop
     parted
+    starship
   ];
 
   # List services that you want to enable:
@@ -53,15 +44,81 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  users.users.maximumstock = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHXKgTkKiSd5fJzH2cxUCN0f/c27tYNNl0M5u8G+TtR maximumstock@Maximilians-MBP.fritz.box"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHU1c6hTHlZEsSIy0wu8yZw9v5RObSejgCmDD7Du81AE maximumstock@anaconda" # backup, passphrase-less
+    ];
+  };
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHXKgTkKiSd5fJzH2cxUCN0f/c27tYNNl0M5u8G+TtR maximumstock@Maximilians-MBP.fritz.box"
   ];
+  programs.zsh.enable = true;
+  users.defaultUserShell = with pkgs; pkgs.zsh;
+
+  # Samba https://gist.github.com/vy-let/a030c1079f09ecae4135aebf1e121ea6
+  # https://nixos.wiki/wiki/Samba
+  # Also need to add smbpasswd -a <user>
+  services.samba-wsdd = {
+    # make shares visible for Windows clients
+    enable = true;
+    openFirewall = true;
+  };
+  services.samba = {
+    enable = true;
+    securityType = "user";
+    extraConfig = ''
+      workgroup = WORKGROUP
+      server string = smbnix
+      netbios name = smbnix
+      security = user 
+      hosts allow = 192.168.0. 127.0.0.1 localhost
+      hosts deny = 0.0.0.0/0
+      guest account = nobody
+      map to guest = bad user
+      valid users = maximumstock
+    '';
+    shares = {
+      tanka = {
+        path = "/srv/tanka";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+      };
+      tankb = {
+        path = "/srv/tankb";
+        browseable = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+      };
+      "Time Machine" = {
+        path = "/srv/tanka/timemachine";
+        browseable = "yes";
+        public = "no";
+        writable = "yes";
+        "read only" = "no";
+        "guest ok" = "no";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+        "force user" = "maximumstock";
+        "fruit:aapl" = "yes";
+        "fruit:time machine" = "yes";
+        "vfs objects" = "catia fruit streams_xattr";
+      };
+    };
+  };
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = true;
+  networking.firewall.allowPing = true;
+  networking.firewall.allowedTCPPorts = [ 445 139 ];
+  networking.firewall.allowedUDPPorts = [ 137 138 ];
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
