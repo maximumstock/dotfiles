@@ -51,6 +51,8 @@
     pkgs.unzip
     # COQ
     pkgs.python38
+    pkgs.nixd
+    pkgs.deploy-rs
   ];
 
   programs.rofi = {

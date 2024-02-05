@@ -240,6 +240,7 @@ lsp.clangd.setup({ capabilities = capabilities })
 -- lsp.rust_analyzer.setup({ capabilities = capabilities })
 lsp.dockerls.setup({ capabilities = capabilities })
 lsp.tsserver.setup({ capabilities = capabilities })
+lsp.nixd.setup({ capabilities = capabilities })
 --
 -- lsp.util.default_config.on_attach = function()
 --   vim.call('LspAttached')

@@ -175,29 +175,40 @@
     SHELL = pkgs.lib.mkOverride 0 "zsh";
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   programs.ssh.startAgent = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
   networking.firewall.enable = false;
 
   virtualisation.docker.enable = true;
   virtualisation.docker.extraOptions =
     "--metrics-addr 127.0.0.1:9323 --experimental";
+
+  services.restic.backups = {
+    fishtank = {
+      initialize = true;
+      repository = "sftp:fishtank-backup:/srv/tanka/timemachine/anaconda";
+      user = "maximumstock";
+      paths = [
+        "${config.users.users.maximumstock.home}/Dokumente"
+        "${config.users.users.maximumstock.home}/code"
+        "${config.users.users.maximumstock.home}/.config"
+        "${config.users.users.maximumstock.home}/.ssh"
+      ];
+      passwordFile = "/etc/nixos/secrets/restic_password.txt";
+      extraBackupArgs = let
+        ignorePatterns = [
+          "node_modules"
+          "target"
+        ];
+        ignoreFile = builtins.toFile "ignore"
+          (builtins.foldl' (a: b: a + "\n" + b) "" ignorePatterns);
+      in [ "--exclude-file=${ignoreFile}" ];
+    };
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
