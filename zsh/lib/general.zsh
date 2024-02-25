@@ -19,4 +19,3 @@ if [[ $TERM_PROGRAM == "Alacritty" ]] && [[ -z "$INSIDE_EMACS" ]] {
   chpwd
 }
 
-[ $(command -v xset) ] && $(xset r rate 175)
