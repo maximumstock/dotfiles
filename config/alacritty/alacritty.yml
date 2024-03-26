@@ -93,7 +93,8 @@ window:
   # and `light`. Set this to `None` to use the default theme variant.
   #gtk_theme_variant: None
 
-  option_as_alt: false # to allow '~'
+option_as_alt: false # to allow '~'
+alt_send_esc: false
 
 
 #scrolling:
