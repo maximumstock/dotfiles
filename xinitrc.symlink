@@ -1,0 +1,4 @@
+autorandr --load home
+# Set Wallpaper
+feh --randomize --bg-fill ~/.wallpaper.png
+[ $(command -v xset) ] && $(xset r rate 175)
