@@ -120,13 +120,82 @@
   # Open ports in the firewall.
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
-  networking.firewall.allowedTCPPorts = [ 445 139 ];
+  networking.firewall.allowedTCPPorts = [ 445 139 3300 ];
   networking.firewall.allowedUDPPorts = [ 137 138 ];
 
   services.jellyfin = {
     enable = true;
     openFirewall = true;
   };
+
+  services.grafana = {
+    enable = true;
+    settings = {
+      server = {
+        http_port = 3300;
+        http_addr = "";
+      };
+    };
+    provision = {
+      datasources = {
+        settings = {
+          datasources = [
+            {
+              name = "Prometheus";
+              type = "prometheus";
+              url = "http://[::1]:9001";
+            }
+          ];
+        };
+      };
+      dashboards = {
+        settings = {
+          providers = [
+            {
+              name = "fishtank";
+              options.path = "/etc/grafana-dashboards";
+            }
+          ];
+        };
+      };
+    };
+  };
+
+  environment.etc = {
+    "grafana-dashboards/node-exporter-full_rev30.json" = {
+      source = ./grafana-dashboards/node-exporter-full.json;
+      group = "grafana";
+      user = "grafana";
+    };
+  };
+
+  services.prometheus = {
+    enable = true;
+    port = 9001;
+    exporters = {
+      node = {
+        enable = true;
+        enabledCollectors = [ "systemd" ];
+        port = 9002;
+      };
+    };
+    scrapeConfigs = [
+      {
+        job_name = "fishtank";
+        static_configs = [{
+          targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ];
+        }];
+      }
+    ];
+  };
+
+  # nginx reverse proxy
+  # services.nginx.virtualHosts.${config.services.grafana.domain} = {
+  #   locations."/" = {
+  #       proxyPass = "http://127.0.0.1:${toString config.services.grafana.port}";
+  #       proxyWebsockets = true;
+  #   };
+  # };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
