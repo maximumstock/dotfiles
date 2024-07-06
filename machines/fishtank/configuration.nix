@@ -189,6 +189,14 @@
     ];
   };
 
+  services.cron = {
+    enable = true;
+    systemCronJobs = [
+      # Periodically sync backups to a 2nd disk
+      "0 0 * * *    root    rsync -avz --delete /srv/tanka/timemachine /srv/tankb/backups2/"
+    ];
+  };
+
   # nginx reverse proxy
   # services.nginx.virtualHosts.${config.services.grafana.domain} = {
   #   locations."/" = {
