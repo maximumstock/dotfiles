@@ -51,6 +51,22 @@
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHXKgTkKiSd5fJzH2cxUCN0f/c27tYNNl0M5u8G+TtR maximumstock@Maximilians-MBP.fritz.box"
   ];
 
+  systemd.services.dns-thingy = {
+    enable = true;
+    description = "A local DNS blocker based on https://github.com/maximumstock/dns-thingy";
+    unitConfig = {
+      After = "network.target";
+    };
+    # path = [ pkgs.nix ]
+    serviceConfig = {
+      ExecStart = "/root/.cargo/bin/dns-block-tokio --port 53 --recording-folder /home/root";
+      # ExecStart = "nix run git+https://github.com/maximumstock/dns-thingy";
+      Type = "simple";
+      Restart = "always";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -64,6 +80,7 @@
     fzf
     ripgrep
     neovim
+    dig
   ];
 
   programs.zsh.enable = true;
@@ -84,24 +101,24 @@
 
   virtualisation.docker.enable = true;
 
-  virtualisation.oci-containers.containers = {
-    adguardhome = {
-      image = "adguard/adguardhome:latest";
-      ports = [
-        "53:53/tcp"
-        "53:53/udp"
-        "80:80/tcp"
-        "443:443/tcp"
-        "443:443/udp"
-        "3000:3000/tcp"
-      ];
-      volumes = [
-        "/root/adguardhome/work:/opt/adguardhome/work"
-        "/root/adguardhome/conf:/opt/adguardhome/conf"
-      ];
-      autoStart = true;
-    };
-  };
+  # virtualisation.oci-containers.containers = {
+  #   adguardhome = {
+  #     image = "adguard/adguardhome:latest";
+  #     ports = [
+  #       "53:53/tcp"
+  #       "53:53/udp"
+  #       "80:80/tcp"
+  #       "443:443/tcp"
+  #       "443:443/udp"
+  #       "3000:3000/tcp"
+  #     ];
+  #     volumes = [
+  #       "/root/adguardhome/work:/opt/adguardhome/work"
+  #       "/root/adguardhome/conf:/opt/adguardhome/conf"
+  #     ];
+  #     autoStart = true;
+  #   };
+  # };
 
   networking.nat.enable = true;
   networking.nat.internalInterfaces = [ "ve-+" ];
@@ -109,7 +126,7 @@
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedUDPPorts = [ 53 ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
