@@ -15,6 +15,8 @@
     ./hardware-configuration.nix
   ];
 
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -135,6 +137,22 @@
     138
   ];
 
+  # Jellyfin based on https://nixos.wiki/wiki/Jellyfin
+  # Enable vaapi on OS-level
+  nixpkgs.config.packageOverrides = pkgs: {
+    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+  };
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      intel-vaapi-driver # previously vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+      intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
+      intel-media-sdk # QSV up to 11th gen
+    ];
+  };
   services.jellyfin = {
     enable = true;
     openFirewall = true;
@@ -208,6 +226,9 @@
       "0 0 * * *    root    rsync -avz --delete /srv/tanka/timemachine /srv/tankb/backups2/"
     ];
   };
+
+  # powerManagement.powertop.enable = true; # enables auto-tune upon startup
+  # services.tlp.enable = true;
 
   # nginx reverse proxy
   # services.nginx.virtualHosts.${config.services.grafana.domain} = {
