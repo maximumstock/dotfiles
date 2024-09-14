@@ -59,7 +59,7 @@
     };
     # path = [ pkgs.nix ]
     serviceConfig = {
-      ExecStart = "/root/.cargo/bin/dns-block-tokio --port 53 --recording-folder /home/root";
+      ExecStart = "/root/.cargo/bin/dns-block-tokio --port 53 --dns 8.8.8.8:53";
       # ExecStart = "nix run git+https://github.com/maximumstock/dns-thingy";
       Type = "simple";
       Restart = "always";
