@@ -59,7 +59,7 @@
     extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHXKgTkKiSd5fJzH2cxUCN0f/c27tYNNl0M5u8G+TtR maximumstock@Maximilians-MBP.fritz.box"
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHU1c6hTHlZEsSIy0wu8yZw9v5RObSejgCmDD7Du81AE maximumstock@anaconda" # backup, passphrase-less
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHU1c6hTHlZEsSIy0wu8yZw9v5RObSejgCmDD7Du81AE maximumstock@anaconda" # backup
     ];
   };
   users.users.root.openssh.authorizedKeys.keys = [
@@ -128,11 +128,15 @@
   networking.firewall.enable = true;
   networking.firewall.allowPing = true;
   networking.firewall.allowedTCPPorts = [
+    # SMB
     445
     139
-    3300
+    3300 # Grafana
+    # 58080 # paperless
+    2342 # Photoprism
   ];
   networking.firewall.allowedUDPPorts = [
+    # Jellyfin
     137
     138
   ];
@@ -223,12 +227,60 @@
     enable = true;
     systemCronJobs = [
       # Periodically sync backups to a 2nd disk
-      "0 0 * * *    root    rsync -avz --delete /srv/tanka/timemachine /srv/tankb/backups2/"
+      "0 * * * *    root    rsync -avz --delete /srv/tanka/timemachine /srv/tankb/backups2/"
     ];
   };
 
-  # powerManagement.powertop.enable = true; # enables auto-tune upon startup
-  # services.tlp.enable = true;
+  # Photoprism based on https://nixos.wiki/wiki/PhotoPrism
+  services.photoprism = {
+    enable = true;
+    port = 2342;
+    originalsPath = "/srv/tanka/media/Pictures/Archive";
+    address = "0.0.0.0";
+    settings = {
+      PHOTOPRISM_ADMIN_USER = "admin";
+      PHOTOPRISM_DEFAULT_LOCALE = "en";
+      PHOTOPRISM_DATABASE_DRIVER = "mysql";
+      PHOTOPRISM_DATABASE_NAME = "photoprism";
+      PHOTOPRISM_DATABASE_SERVER = "/run/mysqld/mysqld.sock";
+      PHOTOPRISM_DATABASE_USER = "photoprism";
+    };
+  };
+
+  # MySQL
+  services.mysql = {
+    enable = true;
+    dataDir = "/srv/tankb/mysql";
+    package = pkgs.mariadb;
+    ensureDatabases = [ "photoprism" ];
+    ensureUsers = [ {
+      name = "photoprism";
+      ensurePermissions = {
+        "photoprism.*" = "ALL PRIVILEGES";
+      };
+    } ];
+  };
+
+  # # Thank you NobbZ https://github.com/NobbZ/nixos-config/blob/23b66c28fd50b0dd437599399b2b52d7d071e772/nixos/configurations/mimas.nix#L380-L388
+  # services.paperless = {
+  #   enable = true;
+  #   address = "0.0.0.0";
+  #   port = 58080;
+  #   settings.PAPERLESS_OCR_LANGUAGE = "deu+eng";
+  # };
+  # systemd.services.paperless-scheduler.after = ["var-lib-paperless.mount"];
+  # systemd.services.paperless-consumer.after = ["var-lib-paperless.mount"];
+  # systemd.services.paperless-web.after = ["var-lib-paperless.mount"];
+
+  powerManagement.enable = true;
+  powerManagement.powertop.enable = true; # enables auto-tune upon startup
+  services.tlp.enable = true;
+  services.tlp.settings = {
+    CPU_ENERGY_PERF_POLICY_ON_AC = "power"; # https://linrunner.de/tlp/settings/processor.html#cpu-energy-perf-policy-on-ac-bat
+    RUNTIME_PM_ON_AC = "on"; # https://linrunner.de/tlp/settings/runtimepm.html
+    PCIE_ASPM_ON_AC = "powersupersave";
+    PLATFORM_PROFILE_ON_AC = "lower-power";
+  };
 
   # nginx reverse proxy
   # services.nginx.virtualHosts.${config.services.grafana.domain} = {

@@ -32,6 +32,10 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+  boot.kernelParams = [ "pcie_aspm=force" ];
+  boot.initrd.postDeviceCommands = ''
+    echo 1 > /sys/devices/pci0000:00/0000:00:13.2/0000:03:00.0/link/l1_aspm
+  '';
 
   swapDevices = [ ];
 
