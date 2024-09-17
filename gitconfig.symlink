@@ -2,6 +2,8 @@
     name = Maximilian Stock
 [github]
     user = maximumstock
+[init]
+    defaultBranch = main
 [color]
     diff = auto
     status = auto
@@ -30,7 +32,6 @@
     excludesfile = ~/.gitignore_global
     editor = nvim
     whitespace = -trailing-space,-indent-with-non-tab,-tab-in-indent
-    pager = delta
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
@@ -38,8 +39,16 @@
     required = true
 [pull]
     rebase = true
+
+# Delta Configuration https://github.com/dandavison/delta
+[core]
+    pager = delta
 [interactive]
     diffFilter = delta --color-only
+[merge]
+    conflictstyle = diff3
+[diff]
+    colorMoved = default
 [delta]
     features = theme interactive
     navigate = true
@@ -56,5 +65,3 @@
     # hunk-header-file-style = red
     # hunk-header-line-number-style = "#067a00"
     # hunk-header-style = file line-number syntax
-[init]
-    defaultBranch = main
