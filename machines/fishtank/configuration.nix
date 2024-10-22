@@ -136,6 +136,8 @@
     2342 # Photoprism
   ];
   networking.firewall.allowedUDPPorts = [
+    # dns-thingy
+    53
     # Jellyfin
     137
     138
@@ -280,6 +282,23 @@
     RUNTIME_PM_ON_AC = "on"; # https://linrunner.de/tlp/settings/runtimepm.html
     PCIE_ASPM_ON_AC = "powersupersave";
     PLATFORM_PROFILE_ON_AC = "lower-power";
+  };
+
+  programs.nix-ld.enable = true;
+  systemd.services.dns-thingy = {
+    enable = true;
+    description = "A local DNS blocker based on https://github.com/maximumstock/dns-thingy";
+    unitConfig = {
+      After = "network.target";
+    };
+    # path = [ pkgs.nix ]
+    serviceConfig = {
+      ExecStart = "/root/.cargo/bin/dns-block-tokio --bind-address 0.0.0.0 --bind-port 53 --dns-relay 8.8.8.8:53";
+      # ExecStart = "nix run git+https://github.com/maximumstock/dns-thingy";
+      Type = "simple";
+      Restart = "always";
+    };
+    wantedBy = [ "multi-user.target" ];
   };
 
   # nginx reverse proxy

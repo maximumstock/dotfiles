@@ -59,7 +59,7 @@
     };
     # path = [ pkgs.nix ]
     serviceConfig = {
-      ExecStart = "/root/.cargo/bin/dns-block-tokio --port 53 --dns 8.8.8.8:53";
+      ExecStart = "/root/.cargo/bin/dns-block-tokio --bind-address 0.0.0.0 --bind-port 53 --dns-relay 8.8.8.8:53";
       # ExecStart = "nix run git+https://github.com/maximumstock/dns-thingy";
       Type = "simple";
       Restart = "always";
