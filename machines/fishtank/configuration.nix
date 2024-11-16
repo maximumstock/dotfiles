@@ -230,6 +230,7 @@
     systemCronJobs = [
       # Periodically sync backups to a 2nd disk
       "0 * * * *    root    rsync -avz --delete /srv/tanka/timemachine /srv/tankb/backups2/"
+      "0 * * * *    root    rsync -avz --delete /srv/tanka/media/Pictures /srv/tankb/backups2"
     ];
   };
 
