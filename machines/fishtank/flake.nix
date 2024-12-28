@@ -1,27 +1,20 @@
 {
   inputs.nixpkgs.url = "github:NixOS/nixpkgs";
-  # For accessing `deploy-rs`'s utility Nix functions
-  inputs.deploy-rs.url = "github:serokell/deploy-rs";
+  inputs.sops-nix.url = "github:Mic92/sops-nix";
+  inputs.agenix.url = "github:ryantm/agenix";
 
-  outputs = { self, nixpkgs, deploy-rs, ... }: {
-    nixosConfigurations.fishtank = nixpkgs.lib.nixosSystem {
+
+  outputs = { self, nixpkgs, sops-nix, agenix, ... }: {
+    nixosConfigurations.fishtank = nixpkgs.lib.nixosSystem rec {
       system = "x86_64-linux";
       modules = [
         ./configuration.nix
+        sops-nix.nixosModules.sops
+        agenix.nixosModules.default
+        {
+          environment.systemPackages = [ agenix.packages.${system}.default ];
+        }
       ];
     };
-
-    deploy.nodes.fishtank = {
-      hostname = "192.168.0.113";
-      profiles.system = {
-        sshUser = "root";
-        user = "root";
-        path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.fishtank;
-        remoteBuild = true;
-      };
-    };
-
-    # This is highly advised, and will prevent many possible mistakes
-    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
   };
 }

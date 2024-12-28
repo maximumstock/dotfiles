@@ -15,6 +15,9 @@
     ./hardware-configuration.nix
   ];
 
+  age.secrets.photoprism.file = ../fishtank/secrets/photoprism.age;
+  age.secrets.tailscale.file = ../fishtank/secrets/tailscale.age;
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Use the systemd-boot EFI boot loader.
@@ -47,6 +50,7 @@
     jellyfin
     jellyfin-web
     jellyfin-ffmpeg
+    tailscale
   ];
 
   # List services that you want to enable:
@@ -56,7 +60,7 @@
 
   users.users.maximumstock = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "media" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHXKgTkKiSd5fJzH2cxUCN0f/c27tYNNl0M5u8G+TtR maximumstock@Maximilians-MBP.fritz.box"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHU1c6hTHlZEsSIy0wu8yZw9v5RObSejgCmDD7Du81AE maximumstock@anaconda" # backup
@@ -65,6 +69,11 @@
   users.users.root.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHXKgTkKiSd5fJzH2cxUCN0f/c27tYNNl0M5u8G+TtR maximumstock@Maximilians-MBP.fritz.box"
   ];
+  users.groups = {
+    media = {
+      members = ["radarr" "maximumstock"];
+    };
+  };
   programs.zsh.enable = true;
   users.defaultUserShell = with pkgs; pkgs.zsh;
 
@@ -81,8 +90,8 @@
     securityType = "user";
     extraConfig = ''
       workgroup = WORKGROUP
-      server string = smbnix
-      netbios name = smbnix
+      server string = fishtank
+      netbios name = fishtank
       security = user
       hosts allow = 192.168.0. 127.0.0.1 localhost
       hosts deny = 0.0.0.0/0
@@ -123,6 +132,8 @@
       };
     };
   };
+
+  services.tailscale.enable = true;
 
   # Open ports in the firewall.
   networking.firewall.enable = true;
@@ -240,8 +251,9 @@
     port = 2342;
     originalsPath = "/srv/tanka/media/Pictures/Archive";
     address = "0.0.0.0";
+    passwordFile = config.age.secrets.photoprism.path;
     settings = {
-      PHOTOPRISM_ADMIN_USER = "admin";
+      PHOTOPRISM_ADMIN_USER = "maximumstock";
       PHOTOPRISM_DEFAULT_LOCALE = "en";
       PHOTOPRISM_DATABASE_DRIVER = "mysql";
       PHOTOPRISM_DATABASE_NAME = "photoprism";
@@ -301,6 +313,49 @@
     };
     wantedBy = [ "multi-user.target" ];
   };
+
+  # create a oneshot job to authenticate to Tailscale
+  systemd.services.tailscale-autoconnect = {
+    description = "Automatic connection to Tailscale";
+
+    # make sure tailscale is running before trying to connect to tailscale
+    after = [ "network-pre.target" "tailscale.service" ];
+    wants = [ "network-pre.target" "tailscale.service" ];
+    wantedBy = [ "multi-user.target" ];
+
+    # set this service as a oneshot job
+    serviceConfig.Type = "oneshot";
+
+    # have the job run this shell script
+    script = with pkgs; ''
+      # wait for tailscaled to settle
+      sleep 2
+
+      cat ${config.age.secrets.tailscale.path} | xargs echo;
+
+      # check if we are already authenticated to tailscale
+      status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
+      if [ $status = "Running" ]; then # if so, then do nothing
+        exit 0
+      fi
+
+      # otherwise authenticate with tailscale
+      cat ${config.age.secrets.tailscale.path} | xargs ${tailscale}/bin/tailscale up -authkey
+    '';
+  };
+
+  services.sabnzbd = {
+    enable = true;
+    openFirewall = true;
+  };
+
+  services.radarr = {
+    enable = true;
+    openFirewall = true;
+  };
+
+
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "unrar" ];
 
   # nginx reverse proxy
   # services.nginx.virtualHosts.${config.services.grafana.domain} = {
