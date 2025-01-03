@@ -51,6 +51,7 @@
     jellyfin-web
     jellyfin-ffmpeg
     tailscale
+    smartmontools
   ];
 
   # List services that you want to enable:
@@ -133,6 +134,14 @@
     };
   };
 
+  services.smartd = {
+    enable = true;
+    devices = [
+      { device = "/dev/sdb"; }
+      { device = "/dev/sdc"; }
+    ];
+  };
+
   services.tailscale.enable = false;
 
   # Open ports in the firewall.
@@ -167,6 +176,7 @@
       vaapiVdpau
       libvdpau-va-gl
       intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
+      vpl-gpu-rt # QSV on 11th gen or newer
       intel-media-sdk # QSV up to 11th gen
     ];
   };
@@ -215,6 +225,11 @@
       group = "grafana";
       user = "grafana";
     };
+    "grafana-dashboards/smartctl-exporter-20204_rev1.json" = {
+      source = ./grafana-dashboards/smartctl-exporter-20204_rev1.json;
+      group = "grafana";
+      user = "grafana";
+    };
   };
 
   services.prometheus = {
@@ -226,12 +241,18 @@
         enabledCollectors = [ "systemd" ];
         port = 9002;
       };
+      smartctl = {
+        enable = true;
+        port = 9003;
+        devices = [ "/dev/sdb" "/dev/sdc" ];
+      };
     };
     scrapeConfigs = [
       {
         job_name = "fishtank";
         static_configs = [
           { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.node.port}" ]; }
+          { targets = [ "127.0.0.1:${toString config.services.prometheus.exporters.smartctl.port}" ]; }
         ];
       }
     ];
