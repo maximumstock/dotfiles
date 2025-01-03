@@ -60,7 +60,7 @@
 
   users.users.maximumstock = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "media" ];
+    extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEHXKgTkKiSd5fJzH2cxUCN0f/c27tYNNl0M5u8G+TtR maximumstock@Maximilians-MBP.fritz.box"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHU1c6hTHlZEsSIy0wu8yZw9v5RObSejgCmDD7Du81AE maximumstock@anaconda" # backup
@@ -71,7 +71,7 @@
   ];
   users.groups = {
     media = {
-      members = ["radarr" "maximumstock"];
+      members = ["radarr" "sonarr" "maximumstock" "jellyfin"];
     };
   };
   programs.zsh.enable = true;
@@ -133,7 +133,7 @@
     };
   };
 
-  services.tailscale.enable = true;
+  services.tailscale.enable = false;
 
   # Open ports in the firewall.
   networking.firewall.enable = true;
@@ -173,6 +173,7 @@
   services.jellyfin = {
     enable = true;
     openFirewall = true;
+    group = "media";
   };
 
   services.grafana = {
@@ -289,12 +290,12 @@
 
   powerManagement.enable = true;
   powerManagement.powertop.enable = true; # enables auto-tune upon startup
-  services.tlp.enable = true;
+  services.tlp.enable = false;
   services.tlp.settings = {
-    CPU_ENERGY_PERF_POLICY_ON_AC = "power"; # https://linrunner.de/tlp/settings/processor.html#cpu-energy-perf-policy-on-ac-bat
-    RUNTIME_PM_ON_AC = "on"; # https://linrunner.de/tlp/settings/runtimepm.html
-    PCIE_ASPM_ON_AC = "powersupersave";
-    PLATFORM_PROFILE_ON_AC = "lower-power";
+    CPU_ENERGY_PERF_POLICY_ON_AC = "balance_performance"; # https://linrunner.de/tlp/settings/processor.html#cpu-energy-perf-policy-on-ac-bat
+    RUNTIME_PM_ON_AC = "auto"; # https://linrunner.de/tlp/settings/runtimepm.html
+    PCIE_ASPM_ON_AC = "default"; # https://linrunner.de/tlp/settings/runtimepm.html#pcie-aspm-on-ac-bat
+    # PLATFORM_PROFILE_ON_AC = "lower-power";
   };
 
   programs.nix-ld.enable = true;
@@ -315,43 +316,52 @@
   };
 
   # create a oneshot job to authenticate to Tailscale
-  systemd.services.tailscale-autoconnect = {
-    description = "Automatic connection to Tailscale";
+  # systemd.services.tailscale-autoconnect = {
+  #   description = "Automatic connection to Tailscale";
 
-    # make sure tailscale is running before trying to connect to tailscale
-    after = [ "network-pre.target" "tailscale.service" ];
-    wants = [ "network-pre.target" "tailscale.service" ];
-    wantedBy = [ "multi-user.target" ];
+  #   # make sure tailscale is running before trying to connect to tailscale
+  #   after = [ "network-pre.target" "tailscale.service" ];
+  #   wants = [ "network-pre.target" "tailscale.service" ];
+  #   wantedBy = [ "multi-user.target" ];
 
-    # set this service as a oneshot job
-    serviceConfig.Type = "oneshot";
+  #   # set this service as a oneshot job
+  #   serviceConfig.Type = "oneshot";
 
-    # have the job run this shell script
-    script = with pkgs; ''
-      # wait for tailscaled to settle
-      sleep 2
+  #   # have the job run this shell script
+  #   script = with pkgs; ''
+  #     # wait for tailscaled to settle
+  #     sleep 2
 
-      cat ${config.age.secrets.tailscale.path} | xargs echo;
+  #     cat ${config.age.secrets.tailscale.path} | xargs echo;
 
-      # check if we are already authenticated to tailscale
-      status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
-      if [ $status = "Running" ]; then # if so, then do nothing
-        exit 0
-      fi
+  #     # check if we are already authenticated to tailscale
+  #     status="$(${tailscale}/bin/tailscale status -json | ${jq}/bin/jq -r .BackendState)"
+  #     if [ $status = "Running" ]; then # if so, then do nothing
+  #       exit 0
+  #     fi
 
-      # otherwise authenticate with tailscale
-      cat ${config.age.secrets.tailscale.path} | xargs ${tailscale}/bin/tailscale up -authkey
-    '';
-  };
+  #     # otherwise authenticate with tailscale
+  #     cat ${config.age.secrets.tailscale.path} | xargs ${tailscale}/bin/tailscale up -authkey
+  #   '';
+  # };
 
   services.sabnzbd = {
     enable = true;
     openFirewall = true;
+    group = "media";
   };
 
   services.radarr = {
     enable = true;
     openFirewall = true;
+    group = "media";
+  };
+
+  services.sonarr = {
+    enable = true;
+    openFirewall = true;
+    dataDir = "/srv/tanka/appdata/sonarr";
+    group = "media";
   };
 
 
